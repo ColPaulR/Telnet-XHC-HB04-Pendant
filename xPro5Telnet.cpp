@@ -21,44 +21,57 @@ class myXHC_HB04 {
         int do_reconnect = 1;
 
         // USB variables
-        libusb_device_handle* dev_handle;
+        libusb_context* context = NULL;        
+		libusb_device_handle* dev_handle;
     
         //size_t i;
         //int i = 0;
         //int iLen;
 
         int iConnect() {
-            size_t list;
-            libusb_context* context = NULL;        
-            libusb_device** devs;
-            
-            printf("waiting for XHC-HB04 device\n");
+			size_t list;
+			libusb_device** devs;
+			int ret;
 
-            list = libusb_get_device_list(context, &devs);
-			
-            if (list < 0) {
+			printf("waiting for XHC-HB04 device\n");
+
+			list = libusb_get_device_list(context, &devs);
+
+			if (list < 0) {
 				perror("libusb_get_device_list");
 				return 1;
 			}
-
+			
 			dev_handle = libusb_open_device_with_vid_pid(context, LB04_VID, LB04_PID);
 			libusb_free_device_list(devs, 1);
-            if (dev_handle == NUL) {
-                printf("found XHC-HB04 device\n");
-                do_reconnect = 0;
-                return 0;
-            }
-            
-            return 2;
-        }
-    
+			
+			if (dev_handle) {
+				printf("found XHC-HB04 device\n");
+				
+				if (libusb_kernel_driver_active(dev_handle, 0) == 1) {
+					libusb_detach_kernel_driver(dev_handle, 0);
+				}
+
+				ret = libusb_claim_interface(dev_handle, 0);
+				if (ret < 0) {
+					perror("libusb_claim_interface");
+					return 1;
+				}
+
+				ret = libusb_set_configuration(dev_handle, 1);
+			}
+			
+			// Return success
+			return 0;
+		}
+		   
     public:
         myHXC_HB04() {
-            int ret = libusb_init(&context);
+            int ret;
 
-            if (ret < 0) {
+            if (libusb_init(&context) < 0) {
                 perror("libusb_init");
-                return 1;
+                return;
             }
             	
             libusb_set_option(context, LIBUSB_OPTION_MAX);
@@ -67,6 +80,12 @@ class myXHC_HB04 {
         }
 
         ~myHXC_HB04() {
+			printf("connection lost, cleaning up\n");
+			//libusb_cancel_transfer(transfer_in);
+			//libusb_free_transfer(transfer_in);
+			libusb_release_interface(dev_handle, 0);
+			libusb_close(dev_handle);
+			libusb_exit(context);		
         } 
 }
 
