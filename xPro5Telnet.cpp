@@ -87,6 +87,42 @@ class myXHC_HB04 {
 			libusb_close(dev_handle);
 			libusb_exit(context);		
         } 
+	
+	int ReadButtons() {
+		int iLen;
+		int ret;
+		
+		unsigned char in_buf[6];
+		//unsigned char ubButton1, ubButton2, ubAxis, ubScale;
+		//char cJog;
+		
+		switch (ret=libusb_bulk_transfer(dev_handle, (0x01 | LIBUSB_ENDPOINT_IN), in_buf, sizeof(in_buf), &iLen, 0)) {
+			case 0:
+				// 0 on success (and populates transferred)
+				if iLen != sizeof (in_buf) {
+					std::cerr << "Wrong number of bytes returned: " & iLen &"\n";
+					return iLen;
+				}
+				return 0;
+				break;
+			case LIBUSB_ERROR_TIMEOUT://if the transfer timed out (and populates transferred)
+			case LIBUSB_ERROR_PIPE: // if the endpoint halted
+			case LIBUSB_ERROR_OVERFLOW: // if the device offered more data, see Packets and overflows
+			case LIBUSB_ERROR_NO_DEVICE: // if the device has been disconnected
+			case LIBUSB_ERROR_BUSY: // if called from event handling context
+			case LIBUSB_ERROR: // code on other failures
+				return ret;
+		}
+		
+		/*		ubButton1 = in_buf[2];
+				ubButton2 = in_buf[3];
+				ubAxis = ((in_buf[5] & 0x10) ? (in_buf[5] & 0x0f) : 0);
+				ubScale = ((int) in_buf[4] -12);
+				cJog = (byte) in_buf[6];
+				hexdump((unsigned char*)&in_buf, iLen);
+				printf("button1 = %x button2 = %x axis = %x scale = %x jog = %x\n", ubButton1, ubButton2, ubAxis,ubScale, cJog);
+				Sleep(1);*/
+	}
 }
 
 /*const config = require('./xhcrc');
