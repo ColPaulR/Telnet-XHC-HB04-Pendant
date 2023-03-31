@@ -1,14 +1,15 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <assert.h>
-#include <signal.h>
-#include <string.h>
-#include <libusb.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <string.h>
+//#include <math.h>
+//#include <assert.h>
+//#include <signal.h>
+//#include <string.h>
+//#include <libusb.h>
 //#include <unistd.h>
 //#include <synchapi.h>
-#include <stdarg.h>
+//#include <stdarg.h>
+//#include <iostream>
 
 #define LB04_VID 4302
 #define LB04_PID 60307
