@@ -62,6 +62,9 @@ class myXHC_HB04 {
 				ret = libusb_set_configuration(dev_handle, 1);
 			}
 			
+            // Show as connected
+            do_reconnect=0;
+
 			// Return success
 			return 0;
 		}
@@ -89,14 +92,22 @@ class myXHC_HB04 {
 			libusb_exit(context);		
         } 
 	
-	int ReadButtons() {
+	int ReadButtons(char *in_buf) {
 		int iLen;
 		int ret;
 		
-		unsigned char in_buf[6];
+		//unsigned char in_buf[6];
 		//unsigned char ubButton1, ubButton2, ubAxis, ubScale;
 		//char cJog;
 		
+        // Check to see if connected
+        if do_reconnect {
+           ret= iConnect();
+           if (ret<>0)
+            return ret;
+        }
+
+        // Assumed connected here
 		switch (ret=libusb_bulk_transfer(dev_handle, (0x01 | LIBUSB_ENDPOINT_IN), in_buf, sizeof(in_buf), &iLen, 0)) {
 			case 0:
 				// 0 on success (and populates transferred)
@@ -106,10 +117,11 @@ class myXHC_HB04 {
 				}
 				return 0;
 				break;
+			case LIBUSB_ERROR_NO_DEVICE: // if the device has been disconnected
+                do_reconnect = 1;
 			case LIBUSB_ERROR_TIMEOUT://if the transfer timed out (and populates transferred)
 			case LIBUSB_ERROR_PIPE: // if the endpoint halted
 			case LIBUSB_ERROR_OVERFLOW: // if the device offered more data, see Packets and overflows
-			case LIBUSB_ERROR_NO_DEVICE: // if the device has been disconnected
 			case LIBUSB_ERROR_BUSY: // if called from event handling context
 			case LIBUSB_ERROR: // code on other failures
 				return ret;
