@@ -14,61 +14,188 @@
 #define LB04_VID 4302
 #define LB04_PID 60307
 
+typedef enum {
+	axis_off = 0x00,
+	axis_x = 0x11,
+	axis_y = 0x12,
+	axis_z = 0x13,
+	axis_a = 0x18,
+	axis_spindle = 0x14,
+	axis_feed = 0x15
+} xhc_axis_t;
+
 class myXHC_HB04 {
     private:
         // Array used to transmit selected axis
         const string szAxisChars = "XYZA";
-        int do_exit = 0;
-        int do_reconnect = 1;
+
+	// Quit if 1
+        bool bDo_Exit = FALSE;
+        bool bDo_Reconnect = TRUE;
 
         // USB variables
         libusb_context* context = NULL;        
-		libusb_device_handle* dev_handle;
+	libusb_device_handle* dev_handle;
     
         //size_t i;
         //int i = 0;
         //int iLen;
 
+	// Internal states
+	int iStep;
+	int iAxis;
+	unsigned byte ubAxis;
+	unsigned byte ubScale;
+	char cJog;
+
         int iConnect() {
-			size_t list;
-			libusb_device** devs;
-			int ret;
+		size_t list;
+		libusb_device** devs;
+		int ret;
 
-			printf("waiting for XHC-HB04 device\n");
+		printf("waiting for XHC-HB04 device\n");
 
-			list = libusb_get_device_list(context, &devs);
+		list = libusb_get_device_list(context, &devs);
 
-			if (list < 0) {
-				perror("libusb_get_device_list");
+		if (list < 0) {
+			perror("libusb_get_device_list");
+			return 1;
+		}
+			
+		dev_handle = libusb_open_device_with_vid_pid(context, LB04_VID, LB04_PID);
+		libusb_free_device_list(devs, 1);
+		
+		if (dev_handle) {
+			printf("found XHC-HB04 device\n");
+			
+			if (libusb_kernel_driver_active(dev_handle, 0) == 1) {
+				libusb_detach_kernel_driver(dev_handle, 0);
+			}
+
+			ret = libusb_claim_interface(dev_handle, 0);
+			if (ret < 0) {
+				perror("libusb_claim_interface");
 				return 1;
 			}
-			
-			dev_handle = libusb_open_device_with_vid_pid(context, LB04_VID, LB04_PID);
-			libusb_free_device_list(devs, 1);
-			
-			if (dev_handle) {
-				printf("found XHC-HB04 device\n");
-				
-				if (libusb_kernel_driver_active(dev_handle, 0) == 1) {
-					libusb_detach_kernel_driver(dev_handle, 0);
-				}
 
-				ret = libusb_claim_interface(dev_handle, 0);
-				if (ret < 0) {
-					perror("libusb_claim_interface");
-					return 1;
-				}
-
-				ret = libusb_set_configuration(dev_handle, 1);
-			}
-			
-            // Show as connected
-            do_reconnect=0;
-
-			// Return success
-			return 0;
+			ret = libusb_set_configuration(dev_handle, 1);
 		}
-		   
+			
+            	// Show as connected
+       		bDo_Reconnect=0;
+
+		// Return success
+		return 0;
+	}
+
+	int xhc_encode_float(float v, unsigned char *buf)
+	{
+		unsigned int int_v = round(fabs(v) * 10000.0);
+		unsigned short int_part = int_v / 10000;
+		unsigned short fract_part = int_v % 10000;
+		if (v < 0) fract_part = fract_part | 0x8000;
+		*(short *)buf = int_part;
+		*((short *)buf+1) = fract_part;
+		return 4;
+	}
+
+	int xhc_encode_s16(int v, unsigned char *buf)
+	{
+		*(short *)buf = v;
+		return 2;
+	}
+
+	void xhc_display_encode(unsigned char *data, int len)
+	{
+		unsigned char buf[6*7];
+		unsigned char *p = buf;
+		int i;
+		int packet;
+
+		assert(len == 6*8);
+
+		memset(buf, 0, sizeof(buf));
+
+		*p++ = 0xFE;
+		*p++ = 0xFD;
+		*p++ = 0x0C;
+
+		if (iAxis == axis_a) 
+			p += xhc_encode_float(round(1000 * *(xhc->hal->a_wc)) / 1000, p);
+		else
+			p += xhc_encode_float(round(1000 * *(xhc->hal->x_wc)) / 1000, p);
+		p += xhc_encode_float(round(1000 * *(xhc->hal->y_wc)) / 1000, p);
+		p += xhc_encode_float(round(1000 * *(xhc->hal->z_wc)) / 1000, p);
+		if (iAxis == axis_a) 
+			p += xhc_encode_float(round(1000 * *(xhc->hal->a_mc)) / 1000, p);
+		else 
+			p += xhc_encode_float(round(1000 * *(xhc->hal->x_mc)) / 1000, p);
+		p += xhc_encode_float(round(1000 * *(xhc->hal->y_mc)) / 1000, p);
+		p += xhc_encode_float(round(1000 * *(xhc->hal->z_mc)) / 1000, p);
+		p += xhc_encode_s16(round(100.0 * *(xhc->hal->feedrate_override)), p);
+		p += xhc_encode_s16(round(100.0 * *(xhc->hal->spindle_override)), p);
+		p += xhc_encode_s16(round(60.0 * *(xhc->hal->feedrate)), p);
+		p += xhc_encode_s16(round(60.0 * *(xhc->hal->spindle_rps)), p);
+
+		switch (iStep) {
+		case 1:
+			buf[35] = 0x01;
+			break;
+		case 10:
+			buf[35] = 0x03;
+			break;
+		case 100:
+			buf[35] = 0x08;
+			break;
+		case 1000:
+			buf[35] = 0x0A;
+			break;
+		}
+
+		// Multiplex to 6 USB transactions
+
+		p = buf;
+		for (packet=0; packet<6; packet++) {
+			for (i=0; i<8; i++) {
+				if (i == 0)
+					data[i+8*packet] = 6;
+				else 
+					data[i+8*packet] = *p++;
+			}
+		}
+	}	
+	   
+	void vDoButtons(unsigned byte ubNewButton1, unsigned byte ubNewButton2) {
+		// check for prior button1 release
+		if ((this->ubButton1 <> ubNewButton1) || (this->ubButton1 <> ubNewButton2) {
+			// this->ubButton1 was released
+			printf("Button %d was released\n",this->ubButton1);
+		}
+
+		// check for prior button2 release
+		if ((this->ubButton2 <> ubNewButton1) || (this->ubButton2 <> ubNewButton2) {
+			// this->ubButton2 was released
+			printf("Button %d was released\n",this->ubButton2);
+		}
+
+		// check if ubNewButton1 was in last buttons
+		if ((ubNewButton1<>this->ubButton1) || (ubNewButton1<>this->ubButton2) {
+			// this->ubNewButton1 was pressed
+			printf("Button %d was pressed\n",this->ubNewButton1);
+		}
+
+		// check if ubNewButton2 was in last buttons
+		if ((ubNewButton2<>this->ubButton1) || (ubNewButton2<>this->ubButton2) {
+			// this->ubNewButton2 was pressed
+			printf("Button %d was pressed\n",this->ubNewButton2);
+		}
+
+		// Save current buttons to last
+	    	this->ubButton1 = ubNewButton1;
+		this->ubButton2 = ubNewButton2;
+	}
+
+
     public:
         myHXC_HB04() {
             int ret;
@@ -81,6 +208,10 @@ class myXHC_HB04 {
             libusb_set_option(context, LIBUSB_OPTION_MAX);
             
             ret = iConnect();
+
+	    // Set last buttons pressed to no buttons pressed
+	    this->ubButton1 = 0;
+	    this->ubButton2 = 0;
         }
 
         ~myHXC_HB04() {
@@ -92,22 +223,47 @@ class myXHC_HB04 {
 			libusb_exit(context);		
         } 
 	
-	int ReadButtons(char *in_buf) {
+	int SetDisplay() {
+		unsigned char data[6*8];
+		int packet;
+		int ret;
+		
+		
+	        // Check to see if connected
+        	if bDo_Reconnect {
+	           ret = iConnect();
+        	   if (ret<>0)
+	            return ret;
+	        }
+
+		// Format buffer
+		xhc_display_encode(unsigned char *data, sizeof(data))
+
+	        // Assumed connected here
+		for (packet=0; packet<6; packet++) {
+			ret=libusb_control_transfer(dev_handle, 0x21, 0x09, 0x0306, 0x00, data+8*packet, 8, 0))
+			if (ret < 0) {
+				// Transferred less than 0 bytes
+	        	        bDo_Reconnect = 1;
+				return ret;
+			}
+		}
+		
+	}
+
+	int ReadXHC() {
 		int iLen;
 		int ret;
 		
-		//unsigned char in_buf[6];
-		//unsigned char ubButton1, ubButton2, ubAxis, ubScale;
-		//char cJog;
-		
-        // Check to see if connected
-        if do_reconnect {
-           ret= iConnect();
-           if (ret<>0)
-            return ret;
-        }
+		unsigned char in_buf[6];
 
-        // Assumed connected here
+	        // Check to see if connected
+        	if bDo_Reconnect {
+			ret = iConnect();
+			if (ret<>0) return ret;
+		}
+
+	        // Assumed connected here
 		switch (ret=libusb_bulk_transfer(dev_handle, (0x01 | LIBUSB_ENDPOINT_IN), in_buf, sizeof(in_buf), &iLen, 0)) {
 			case 0:
 				// 0 on success (and populates transferred)
@@ -118,7 +274,7 @@ class myXHC_HB04 {
 				return 0;
 				break;
 			case LIBUSB_ERROR_NO_DEVICE: // if the device has been disconnected
-                do_reconnect = 1;
+        		        bDo_Reconnect = 1;
 			case LIBUSB_ERROR_TIMEOUT://if the transfer timed out (and populates transferred)
 			case LIBUSB_ERROR_PIPE: // if the endpoint halted
 			case LIBUSB_ERROR_OVERFLOW: // if the device offered more data, see Packets and overflows
@@ -126,17 +282,32 @@ class myXHC_HB04 {
 			case LIBUSB_ERROR: // code on other failures
 				return ret;
 		}
-		
-		/*		ubButton1 = in_buf[2];
-				ubButton2 = in_buf[3];
-				ubAxis = ((in_buf[5] & 0x10) ? (in_buf[5] & 0x0f) : 0);
-				ubScale = ((int) in_buf[4] -12);
-				cJog = (byte) in_buf[6];
-				hexdump((unsigned char*)&in_buf, iLen);
-				printf("button1 = %x button2 = %x axis = %x scale = %x jog = %x\n", ubButton1, ubButton2, ubAxis,ubScale, cJog);
-				Sleep(1);*/
+
+		// Copy buttons to variables in descending order
+		if (in_buf[3] > in_buf[2]) 
+			vDoButtons(in_buf[3], in_buf[2]);
+		else
+			vDoButtons(in_buf[2], in_buf[3]);
+
+		// Process remaining fields
+		this->ubAxis = ((in_buf[5] & 0x10) ? (in_buf[5] & 0x0f) : 0);
+		this->ubScale = ((int) in_buf[4] -12);
+		this->cJog = (byte) in_buf[6];
+
+		// Debug print out data
+		hexdump((unsigned char*)&in_buf, iLen);
+		printf(" button1 = %x button2 = %x axis = %x scale = %x jog = %x\n", this->ubButton1, this->ubButton2, this->ubAxis,this->ubScale, this->cJog);
 	}
+
 }
+
+
+
+
+
+
+
+
 
 /*const config = require('./xhcrc');
 const { Telnet_Init, CNC_state } = require('./myTelnet');
