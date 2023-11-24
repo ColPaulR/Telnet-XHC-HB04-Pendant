@@ -13,7 +13,6 @@
 
 #include <unistd.h>
 #include <iostream> 
-
 #include "XHC_HB04.cpp"
 
 XHC_HB04 myPendant;
@@ -35,7 +34,7 @@ int main()
 		if (iReturn==0) {
 			// Debug print out data
 			hexdump((unsigned char*)&in_buf, iLen);
-			printf(" button1 = %x button2 = %x axis = %x scale = %x jog = %x\n", this->ubButton1, this->ubButton2, this->ubAxis,this->ubScale, this->cJog);
+			//printf(" button1 = %x button2 = %x axis = %x scale = %x jog = %x\n", this->ubButton1, this->ubButton2, this->ubAxis,this->ubScale, this->cJog);
 		}
 		usleep(100000);
 	}
