@@ -86,6 +86,10 @@ int TelnetSend(SOCKET ConnectSocket, char *szSend) {
 
 void TelnetTask(SOCKET ConnectSocket)
 {
+  char recvbuf[DEFAULT_BUFLEN];
+  int iResult;
+  int recvbuflen = DEFAULT_BUFLEN;
+  
     iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
     if (iResult > 0) {
       recvbuf[iResult] = 0;
