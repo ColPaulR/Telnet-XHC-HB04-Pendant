@@ -18,7 +18,6 @@ using namespace std;
 #pragma comment(lib, "Mswsock.lib")
 #pragma comment(lib, "AdvApi32.lib")
 
-#define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "23"
 #define DEFAULT_SERVER "192.168.0.48"
 
@@ -26,9 +25,7 @@ int main(int argc, char **argv) {
   WSADATA wsaData;
   SOCKET ConnectSocket = INVALID_SOCKET;
   char sendbuf[] = "/n?/n?/n";
-  char recvbuf[DEFAULT_BUFLEN];
   int iResult;
-  int recvbuflen = DEFAULT_BUFLEN;
 
   // Initialize Winsock
   iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
