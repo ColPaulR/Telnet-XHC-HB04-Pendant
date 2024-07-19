@@ -2,5 +2,5 @@
 //
 #include <winsock2.h>
 
-SOCKET TelnetConnect(const char *szServer);
-int TelnetSend(SOCKET ConnectSocket, char *szSend);
+extern SOCKET TelnetConnect(const char *szServer);
+extern int TelnetSend(SOCKET ConnectSocket, char *szSend);
