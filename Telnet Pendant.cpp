@@ -9,6 +9,7 @@
 #include <ws2tcpip.h>
 
 #include "Telnet Pendant.h"
+#include "Telnet.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ using namespace std;
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "23"
 #define DEFAULT_SERVER "192.168.0.48"
-
+/*
 SOCKET TelnetConnect(const char *szServer) {
   struct addrinfo *result = NULL, *ptr = NULL, hints;
   int iResult;
@@ -95,7 +96,7 @@ int TelnetSend(SOCKET ConnectSocket, char *szSend) {
   }
   return (iResult);
 }
-
+*/
 int main(int argc, char **argv) {
   WSADATA wsaData;
   SOCKET ConnectSocket = INVALID_SOCKET;
@@ -146,8 +147,3 @@ int main(int argc, char **argv) {
 
   return 0;
 }
-// int main()
-//{
-//	cout << "Hello CMake." << endl;
-//	return 0;
-// }
