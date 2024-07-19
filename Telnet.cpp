@@ -7,7 +7,8 @@
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-//#include "Telnet Pendant.h"
+
+#define DEFAULT_BUFLEN 512
 
 SOCKET TelnetConnect(const char *szServer, const char *szPort) {
   struct addrinfo *result = NULL, *ptr = NULL, hints;
