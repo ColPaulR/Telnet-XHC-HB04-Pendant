@@ -83,3 +83,17 @@ int TelnetSend(SOCKET ConnectSocket, char *szSend) {
   }
   return (iResult);
 }
+
+void TelnetTask(SOCKET ConnectSocket)
+{
+    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+    if (iResult > 0) {
+      recvbuf[iResult] = 0;
+      printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
+    } else if (iResult == 0)
+      printf("Connection closed\n");
+    else
+      printf("recv failed with error: %d\n", WSAGetLastError());
+
+  return;
+}
