@@ -92,8 +92,8 @@ int TelnetSend(SOCKET ConnectSocket, char *szSend) {
       exit(1);
       break;
     }
-    return (iResult);
   }
+  return (iResult);
 }
 
 int main(int argc, char **argv) {
