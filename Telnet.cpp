@@ -9,7 +9,7 @@
 #include <ws2tcpip.h>
 //#include "Telnet Pendant.h"
 
-SOCKET TelnetConnect(const char *szServer) {
+SOCKET TelnetConnect(const char *szServer, const char *szPort) {
   struct addrinfo *result = NULL, *ptr = NULL, hints;
   int iResult;
   SOCKET MySocket;
@@ -20,7 +20,7 @@ SOCKET TelnetConnect(const char *szServer) {
   hints.ai_protocol = IPPROTO_TCP;
 
   // Resolve the server address and port
-  iResult = getaddrinfo(DEFAULT_SERVER, DEFAULT_PORT, &hints, &result);
+  iResult = getaddrinfo(szServer, szPort, &hints, &result);
   if (iResult != 0) {
     printf("getaddrinfo failed with error: %d\n", iResult);
     WSACleanup();
