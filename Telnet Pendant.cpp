@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  ConnectSocket = TelnetConnect(DEFAULT_SERVER);
+  ConnectSocket = TelnetConnect(DEFAULT_SERVER, DEFAULT_PORT);
 
   iResult = TelnetSend(ConnectSocket, sendbuf);
 
