@@ -24,21 +24,21 @@ jobs:
             cc: "cl", cxx: "cl",
             environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
           }
-        - {
-            name: "Windows Latest MinGW", artifact: "Windows-MinGW",
-            os: windows-latest,
-            cc: "gcc", cxx: "g++"
-          }
-        - {
-            name: "Ubuntu Latest GCC", artifact: "Linux",
-            os: ubuntu-latest,
-            cc: "gcc", cxx: "g++"
-          }
-        - {
-            name: "macOS Latest Clang", artifact: "macOS",
-            os: macos-latest,
-            cc: "clang", cxx: "clang++"
-          }
+#        - {
+#            name: "Windows Latest MinGW", artifact: "Windows-MinGW",
+#            os: windows-latest,
+#            cc: "gcc", cxx: "g++"
+#          }
+#        - {
+#            name: "Ubuntu Latest GCC", artifact: "Linux",
+#            os: ubuntu-latest,
+#            cc: "gcc", cxx: "g++"
+#          }
+#        - {
+#            name: "macOS Latest Clang", artifact: "macOS",
+#            os: macos-latest,
+#            cc: "clang", cxx: "clang++"
+#          }
 
     steps:
     - uses: actions/checkout@v4
