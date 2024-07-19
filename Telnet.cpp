@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include "Telnet Pendant.h"
+//#include "Telnet Pendant.h"
 
 SOCKET TelnetConnect(const char *szServer) {
   struct addrinfo *result = NULL, *ptr = NULL, hints;
