@@ -19,16 +19,16 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     outputs:
         tag: ${{ steps.git.outputs.tag }}
-#    #strategy:
-#      fail-fast: false
-#      matrix:
-#        config:
-#        - {
-#            name: "Windows Latest MSVC", artifact: "Windows-MSVC",
-#            os: windows-latest,
-#            cc: "cl", cxx: "cl",
-#            environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-#          }
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Windows Latest MSVC", artifact: "Windows-MSVC",
+            os: windows-latest,
+            cc: "cl", cxx: "cl",
+            environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+          }
     # Steps
     steps:
     - uses: actions/checkout@v4
