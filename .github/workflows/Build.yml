@@ -136,6 +136,7 @@ jobs:
           ${{ matrix.config.name }}-ccache-
 
     - name: Configure
+     - echo Configuration
       shell: cmake -P {0}
       run: |
         set(ENV{CC} ${{ matrix.config.cc }})
