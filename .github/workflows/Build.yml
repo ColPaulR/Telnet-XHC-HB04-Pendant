@@ -38,10 +38,12 @@ jobs:
 #            name: "macOS Latest Clang", artifact: "macOS",
 #            os: macos-latest,
 #            cc: "clang", cxx: "clang++"
-#          }
+#          
 
     steps:
     - uses: actions/checkout@v4
+      with:
+          submodules: 'true'
     - name: Checkout submodules
       id: git
       shell: cmake -P {0}
