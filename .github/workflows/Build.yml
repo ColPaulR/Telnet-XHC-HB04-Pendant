@@ -1,45 +1,35 @@
 name: CMake Build Matrix
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
 
 env:
+  BUILD_TYPE: Debug
   CMAKE_VERSION: "3.29.6"
   NINJA_VERSION: "1.12.1"
-  BUILD_TYPE: Debug
   CCACHE_VERSION: "4.10"
 
 jobs:
   build:
+    # Setup
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     outputs:
         tag: ${{ steps.git.outputs.tag }}
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - {
-            name: "Windows Latest MSVC", artifact: "Windows-MSVC",
-            os: windows-latest,
-            cc: "cl", cxx: "cl",
-            environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-          }
+#    #strategy:
+#      fail-fast: false
+#      matrix:
+#        config:
 #        - {
-#            name: "Windows Latest MinGW", artifact: "Windows-MinGW",
+#            name: "Windows Latest MSVC", artifact: "Windows-MSVC",
 #            os: windows-latest,
-#            cc: "gcc", cxx: "g++"
+#            cc: "cl", cxx: "cl",
+#            environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
 #          }
-#        - {
-#            name: "Ubuntu Latest GCC", artifact: "Linux",
-#            os: ubuntu-latest,
-#            cc: "gcc", cxx: "g++"
-#          }
-#        - {
-#            name: "macOS Latest Clang", artifact: "macOS",
-#            os: macos-latest,
-#            cc: "clang", cxx: "clang++"
-#          
-
+    # Steps
     steps:
     - uses: actions/checkout@v4
       with:
