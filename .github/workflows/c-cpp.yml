@@ -1,11 +1,5 @@
 name: C/C++ CI
 
-jobs:
-  build:
-
-    runs-on: windows-latest
-
-
 on:
   push:
     branches: [ $default-branch ]
