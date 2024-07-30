@@ -94,8 +94,12 @@ void TelnetTask(SOCKET ConnectSocket)
   
     iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
     if (iResult > 0) {
-      recvbuf[iResult] = 0;
-      printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
+      // process each character in bufer
+      for (int iLooper=0; iLooper<iResult; iLooper++){
+        colect(recvbuf[iLooper]);
+      }
+      // recvbuf[iResult] = 0;
+      // printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
     } else if (iResult == 0)
       printf("Connection closed\n");
     else
