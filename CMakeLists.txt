@@ -11,10 +11,10 @@ endif()
 
 project ("Telnet Pendant")
 
-add_library (GRBLParse "GrblParser/src/GrblParserC.c" "GrblParser/src/GrblParserC.h" "GrblParser/src/e4math.c" "GrblParser/src/e4math.h")
+# add_library (GRBLParse "GrblParser/src/GrblParserC.c" "GrblParser/src/GrblParserC.h" "GrblParser/src/e4math.c" "GrblParser/src/e4math.h")
 
 # Add source to this project's executable.
-add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp" "Telnet.h")
+add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp" "Telnet.h""GrblParser/src/GrblParserC.c" "GrblParser/src/GrblParserC.h" "GrblParser/src/e4math.c" "GrblParser/src/e4math.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
