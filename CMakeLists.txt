@@ -11,7 +11,7 @@ endif()
 
 project ("Telnet Pendant")
 
-add_library (GRBLParse "GRBLParse\src\GrblParserC.c" "GRBLParse\src\GrblParserC.h" "GRBLParse\src\e4math.c" "GRBLParse\src\e4math.h")
+add_library (GRBLParse "GRBLParse/src/GrblParserC.c" "GRBLParse/src/GrblParserC.h" "GRBLParse/src/e4math.c" "GRBLParse/src/e4math.h")
 
 # Add source to this project's executable.
 add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp" "Telnet.h")
