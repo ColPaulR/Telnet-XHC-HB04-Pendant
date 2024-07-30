@@ -12,6 +12,11 @@ endif()
 project ("Telnet Pendant")
 
 # add_library (GRBLParse "GrblParser/src/GrblParserC.c" "GrblParser/src/GrblParserC.h" "GrblParser/src/e4math.c" "GrblParser/src/e4math.h")
+#include_directories(${PROJECT_SOURCE_DIR}/submodule)
+
+#set(SOURCES submodule/b.c)
+
+#add_executable(${PROJECT_NAME} SOURCES)
 
 # Add source to this project's executable.
 add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp" "Telnet.h" "GrblParser/src/GrblParserC.c" "GrblParser/src/GrblParserC.h" "GrblParser/src/e4math.c" "GrblParser/src/e4math.h")
