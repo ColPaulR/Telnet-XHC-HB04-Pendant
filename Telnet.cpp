@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <GrblParserC.h>
+#include "GrblParser\src\GrblParserC.h"
 
 #define DEFAULT_BUFLEN 512
 
