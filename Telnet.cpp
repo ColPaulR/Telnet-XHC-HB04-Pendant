@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <GrblParserC.h>
 
 #define DEFAULT_BUFLEN 512
 
@@ -93,8 +94,14 @@ void TelnetTask(SOCKET ConnectSocket)
   
     iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
     if (iResult > 0) {
+      // Ensure buffer is null terminated to handle as string
       recvbuf[iResult] = 0;
-      printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
+      // Send 1 character at a time to GRBLParser. 
+      for (int iLooper=0;iLooper<iResults; iLooper++)
+      {
+        collect(recvbuf[iLooper]);
+      }
+      // printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
     } else if (iResult == 0)
       printf("Connection closed\n");
     else
