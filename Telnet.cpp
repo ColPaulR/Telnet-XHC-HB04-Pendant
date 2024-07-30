@@ -96,7 +96,7 @@ void TelnetTask(SOCKET ConnectSocket)
     if (iResult > 0) {
       // process each character in bufer
       for (int iLooper=0; iLooper<iResult; iLooper++){
-        colect(recvbuf[iLooper]);
+        collect(recvbuf[iLooper]);
       }
       // recvbuf[iResult] = 0;
       // printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
