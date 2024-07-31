@@ -11,6 +11,8 @@ endif()
 
 project ("Telnet Pendant")
 
+add_subdirectory(GrblParser)
+
 add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp" "Telnet.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
