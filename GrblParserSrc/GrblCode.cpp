@@ -88,13 +88,13 @@ void show_probe(const pos_t *axes, const bool probe_success, size_t n_axis)
     tempStatus->NewProbeFlag = true;
 
     // Send a newly allocated structure that is initialize with current status
-    rp2040.fifo.push_nb((uint32_t) tempStatus);
+    //rp2040.fifo.push_nb((uint32_t) tempStatus);
 }
 
 void end_status_report()
 {
     // Send a newly allocated structure that is initialize with current status
-    rp2040.fifo.push_nb((uint32_t) new GRBLSTATUS(GrblStatus));
+    //rp2040.fifo.push_nb((uint32_t) new GRBLSTATUS(GrblStatus));
 }
 
 // [GC: messages
@@ -134,7 +134,7 @@ void show_gcode_modes(struct gcode_modes *modes)
     }
 
     // Send a newly allocated structure that is initialize with current status
-    rp2040.fifo.push_nb((uint32_t) new GRBLSTATUS(GrblStatus));
+    //rp2040.fifo.push_nb((uint32_t) new GRBLSTATUS(GrblStatus));
 }
 
 // void  handle_other(char *field)

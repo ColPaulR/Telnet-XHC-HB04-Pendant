@@ -29,12 +29,12 @@ static struct gcode_modes new_gcode_modes;
 static char control_pins[MAX_CONTROL_PINS + 1]     = { '\0' };
 static char new_control_pins[MAX_CONTROL_PINS + 1] = { '\0' };
 
-void dbg(const char* line) {
-    char msg[100];
-    strcpy(msg, "$Msg/Uart0=");
-    strcat(msg, line);
-    fnc_send_line(msg, 1000);
-}
+//void dbg(const char* line) {
+//    char msg[100];
+//    strcpy(msg, "$Msg/Uart0=");
+//    strcat(msg, line);
+//    fnc_send_line(msg, 1000);
+//}
 
 bool split(char* input, char** next, char delim) {
     char* pos = strchr(input, delim);
@@ -550,27 +550,27 @@ static void parse_gcode_report(char* tag) {
     show_gcode_modes(&new_gcode_modes);
 }
 
-void fnc_send_line(const char* line, int timeout_ms) {
-    while (_ackwait) {
-        if ((milliseconds() - _ack_time_limit) >= 0) {
-            show_timeout();
-            _ackwait = false;
-        } else {
-            fnc_poll();
-        }
-    }
-    char c;
-    while ((c = *line++) != '\0') {
-        fnc_putchar(c);
-    }
-    fnc_putchar('\n');
-    _ack_time_limit = milliseconds() + timeout_ms;
-    _ackwait        = true;
-}
+//void fnc_send_line(const char* line, int timeout_ms) {
+//    while (_ackwait) {
+//        if ((milliseconds() - _ack_time_limit) >= 0) {
+//            show_timeout();
+//            _ackwait = false;
+//        } else {
+//            fnc_poll();
+//        }
+//    }
+//    char c;
+//    while ((c = *line++) != '\0') {
+//        fnc_putchar(c);
+//    }
+//    fnc_putchar('\n');
+//    _ack_time_limit = milliseconds() + timeout_ms;
+//    _ackwait        = true;
+//}
 
-void fnc_realtime(realtime_cmd_t c) {
-    fnc_putchar((uint8_t)c);
-}
+//void fnc_realtime(realtime_cmd_t c) {
+//    fnc_putchar((uint8_t)c);
+//}
 
 static void parse_report() {
     if (*_report == '\0') {
@@ -642,13 +642,13 @@ void collect(uint8_t data) {
     _report[_report_len]   = '\0';
 }
 
-void fnc_poll() {
-    int c;
-    if ((c = fnc_getchar()) >= 0) {
-        collect(c);
-    }
-    poll_extra();
-}
+//void fnc_poll() {
+//    int c;
+//    if ((c = fnc_getchar()) >= 0) {
+//        collect(c);
+//    }
+//    poll_extra();
+//}
 
 void fnc_wait_ready() {
     // XXX we need to figure out how to do this.  The pendant
@@ -678,13 +678,13 @@ void  handle_other(char* line) {};
 
 // Data parsed from <...> status reports
 void  show_limits(bool probe, const bool* limits, size_t n_axis) {};
-void  show_state(const char* state) {};
+//void  show_state(const char* state) {};
 void  show_file(const char* filename, file_percent_t percent) {};
-void  show_spindle_coolant(int spindle, bool flood, bool mist) {};
-void  show_feed_spindle(uint32_t feedrate, uint32_t spindle_speed) {};
+//void  show_spindle_coolant(int spindle, bool flood, bool mist) {};
+//void  show_feed_spindle(uint32_t feedrate, uint32_t spindle_speed) {};
 void  show_overrides(override_percent_t feed_ovr, override_percent_t rapid_ovr, override_percent_t spindle_ovr) {};
 void  show_linenum(int linenum) {};
-void  show_probe(const pos_t* axes, const bool probe_success, size_t n_axis) {};
+//void  show_probe(const pos_t* axes, const bool probe_success, size_t n_axis) {};
 void  show_probe_pin(bool on) {};
 void  show_control_pins(const char* pins) {};
 
@@ -694,7 +694,7 @@ void  show_control_pins(const char* pins) {};
 void  show_gcode_report(char* tag) {
     parse_gcode_report(tag);
 }
-void  show_gcode_modes(struct gcode_modes* modes) {};
+//void  show_gcode_modes(struct gcode_modes* modes) {};
 
 // Version information
 void  show_versions(const char* grbl_version, const char* fluidnc_version) {};
@@ -702,7 +702,7 @@ void  show_versions(const char* grbl_version, const char* fluidnc_version) {};
 // Called before and after parsing a status report; useful for
 // clearing and updating display screens
 void  begin_status_report() {};
-void  end_status_report() {};
+//void  end_status_report() {};
 
 // used for optional debugging or pendants and smart displays
 void  debug_putchar(char c) {};

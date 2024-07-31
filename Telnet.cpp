@@ -2,12 +2,12 @@
 //
 #define WIN32_LEAN_AND_MEAN
 
+#include "GrblParserSrc/GrblParserC.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <GrblParserC.h>
 
 #define DEFAULT_BUFLEN 512
 
@@ -86,26 +86,24 @@ int TelnetSend(SOCKET ConnectSocket, char *szSend) {
   return (iResult);
 }
 
-void TelnetTask(SOCKET ConnectSocket)
-{
+void TelnetTask(SOCKET ConnectSocket) {
   char recvbuf[DEFAULT_BUFLEN];
   int iResult;
   int recvbuflen = DEFAULT_BUFLEN;
-  
-    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-    if (iResult > 0) {
-      // Ensure buffer is null terminated to handle as string
-      recvbuf[iResult] = 0;
-      // Send 1 character at a time to GRBLParser. 
-      for (int iLooper=0;iLooper<iResults; iLooper++)
-      {
-        collect(recvbuf[iLooper]);
-      }
-      // printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
-    } else if (iResult == 0)
-      printf("Connection closed\n");
-    else
-      printf("recv failed with error: %d\n", WSAGetLastError());
+
+  iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+  if (iResult > 0) {
+    // Ensure buffer is null terminated to handle as string
+    recvbuf[iResult] = 0;
+    // Send 1 character at a time to GRBLParser.
+    for (int iLooper = 0; iLooper < iResult; iLooper++) {
+      collect(recvbuf[iLooper]);
+    }
+    // printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
+  } else if (iResult == 0)
+    printf("Connection closed\n");
+  else
+    printf("recv failed with error: %d\n", WSAGetLastError());
 
   return;
 }
