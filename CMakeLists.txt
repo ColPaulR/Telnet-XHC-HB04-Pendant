@@ -12,7 +12,17 @@ endif()
 project ("Telnet Pendant")
 
 # Add source to this project's executable.
-add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp" "Telnet.h")
+add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp" "Telnet.h" 
+  "GrblParserSrc/GrblCode.cpp"
+  "GrblParserSrc/GrblCode.h"
+  "GrblParserSrc/GrblParserC.c"
+  "GrblParserSrc/GrblParserC.h"
+  "GrblParserSrc/Realtime.h"
+  "GrblParserSrc/alarm.c"
+  "GrblParserSrc/alarm.h"
+  "GrblParserSrc/e4math.c"
+  "GrblParserSrc/e4math.h"
+  )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
