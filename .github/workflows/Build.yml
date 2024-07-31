@@ -17,6 +17,9 @@ jobs:
         ls
         cd GrblParser
         # CMake Command
+        cmake -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        cmake --build build --config ${{env.BUILD_TYPE}}
+        ctest -C ${{env.BUILD_TYPE}}
     # Compile Your Main Code
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
