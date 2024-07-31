@@ -656,60 +656,59 @@ void fnc_wait_ready() {
 }
 
 // Implement this to do anything that must be done while waiting for characters
-void __attribute__((weak)) poll_extra() {};
+void  poll_extra() {};
 
 // Implement these to handle specific kinds of messages from FluidNC
-void __attribute__((weak)) show_alarm(int alarm) {}
-void __attribute__((weak)) show_error(int error) {}
-void __attribute__((weak)) show_ok() {}
-void __attribute__((weak)) show_timeout() {}
+void  show_alarm(int alarm) {};
+void  show_error(int error) {};
+void  show_ok() {};
+void  show_timeout() {};
 
 // Handle [MSG: messages
 // If you do not override it, it will handle IO expander messages.
 // You can override it to handle whatever you want.  The override
 // can first call handle_expander_msg(), which will return true if an
 // expander message was handled.
-void __attribute__((weak)) handle_msg(char* command, char* arguments) {}
+void  handle_msg(char* command, char* arguments) {};
 
-void __attribute__((weak)) handle_json(const char* line) {}
+void  handle_json(const char* line) {};
 
-void __attribute__((weak)) handle_signon(char* version, char* extra) {}
-void __attribute__((weak)) handle_other(char* line) {}
+void  handle_signon(char* version, char* extra) {};
+void  handle_other(char* line) {};
 
 // Data parsed from <...> status reports
-void __attribute__((weak)) show_limits(bool probe, const bool* limits, size_t n_axis) {};
-void __attribute__((weak)) show_state(const char* state) {};
-void __attribute__((weak)) show_dro(const pos_t* axes, const pos_t* wcos, bool isMpos, bool* limits, size_t n_axis) {}
-void __attribute__((weak)) show_file(const char* filename, file_percent_t percent) {}
-void __attribute__((weak)) show_spindle_coolant(int spindle, bool flood, bool mist) {}
-void __attribute__((weak)) show_feed_spindle(uint32_t feedrate, uint32_t spindle_speed) {}
-void __attribute__((weak)) show_overrides(override_percent_t feed_ovr, override_percent_t rapid_ovr, override_percent_t spindle_ovr) {}
-void __attribute__((weak)) show_linenum(int linenum) {}
-void __attribute__((weak)) show_probe(const pos_t* axes, const bool probe_success, size_t n_axis) {}
-void __attribute__((weak)) show_probe_pin(bool on) {}
-void __attribute__((weak)) show_control_pins(const char* pins) {}
+void  show_limits(bool probe, const bool* limits, size_t n_axis) {};
+void  show_state(const char* state) {};
+void  show_file(const char* filename, file_percent_t percent) {};
+void  show_spindle_coolant(int spindle, bool flood, bool mist) {};
+void  show_feed_spindle(uint32_t feedrate, uint32_t spindle_speed) {};
+void  show_overrides(override_percent_t feed_ovr, override_percent_t rapid_ovr, override_percent_t spindle_ovr) {};
+void  show_linenum(int linenum) {};
+void  show_probe(const pos_t* axes, const bool probe_success, size_t n_axis) {};
+void  show_probe_pin(bool on) {};
+void  show_control_pins(const char* pins) {};
 
 // [GC: messages
 // If you want to handle GCode reports directly without having the data parsed
 // into a gcode_modes struct, you can implement your own show_gcode_report()
-void __attribute__((weak)) show_gcode_report(char* tag) {
+void  show_gcode_report(char* tag) {
     parse_gcode_report(tag);
 }
-void __attribute__((weak)) show_gcode_modes(struct gcode_modes* modes) {}
+void  show_gcode_modes(struct gcode_modes* modes) {};
 
 // Version information
-void __attribute__((weak)) show_versions(const char* grbl_version, const char* fluidnc_version) {}
+void  show_versions(const char* grbl_version, const char* fluidnc_version) {};
 
 // Called before and after parsing a status report; useful for
 // clearing and updating display screens
-void __attribute__((weak)) begin_status_report() {}
-void __attribute__((weak)) end_status_report() {}
+void  begin_status_report() {};
+void  end_status_report() {};
 
 // used for optional debugging or pendants and smart displays
-void __attribute__((weak)) debug_putchar(char c) {}
-void __attribute__((weak)) debug_print(const char* msg) {}
-void __attribute__((weak)) debug_println(const char* msg) {}
-int __attribute__((weak)) debug_getchar() {
+void  debug_putchar(char c) {};
+void  debug_print(const char* msg) {};
+void  debug_println(const char* msg) {};
+int  debug_getchar() {
     return -1;
 }
 
