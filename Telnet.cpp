@@ -2,7 +2,7 @@
 //
 #define WIN32_LEAN_AND_MEAN
 
-#include "GrblParserSrc/GrblParserC.h"
+#include "GrblParser/GrblParserC.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>

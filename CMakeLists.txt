@@ -13,15 +13,15 @@ project ("Telnet Pendant")
 
 # Add source to this project's executable.
 add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp" "Telnet.h" 
-  "GrblParserSrc/GrblCode.cpp"
-  "GrblParserSrc/GrblCode.h"
-  "GrblParserSrc/GrblParserC.c"
-  "GrblParserSrc/GrblParserC.h"
-  "GrblParserSrc/Realtime.h"
-  "GrblParserSrc/alarm.c"
-  "GrblParserSrc/alarm.h"
-  "GrblParserSrc/e4math.c"
-  "GrblParserSrc/e4math.h"
+  "GrblParser/GrblCode.cpp"
+  "GrblParser/GrblCode.h"
+  "GrblParser/GrblParserC.c"
+  "GrblParser/GrblParserC.h"
+  "GrblParser/Realtime.h"
+  "GrblParser/alarm.c"
+  "GrblParser/alarm.h"
+  "GrblParser/e4math.c"
+  "GrblParser/e4math.h"
   )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
