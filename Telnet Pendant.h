@@ -6,6 +6,7 @@
 #include <iostream>
 #include <mutex>
 
+using namespace std;
 
 // TODO: Reference additional headers your program requires here.
 // Create static structure to store current state
