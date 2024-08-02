@@ -11,4 +11,4 @@ using namespace std;
 // TODO: Reference additional headers your program requires here.
 // Create static structure to store current state
 extern GRBLSTATUS GrblStatus;
-extern std::mutex mGrblStatus;
+// extern std::mutex mGrblStatus;
