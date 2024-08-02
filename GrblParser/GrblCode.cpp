@@ -2,9 +2,6 @@
 #include <string.h>
 #include "GrblCode.h"
 
-// Create static structure to store current state
-GRBLSTATUS GrblStatus;
-
 // Data parsed from <...> status reports
 // void  show_limits(bool probe, const bool* limits, size_t n_axis) {};
 void show_state(const char *state)

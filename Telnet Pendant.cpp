@@ -7,6 +7,8 @@
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <mutex>
+
 
 #include "Telnet Pendant.h"
 #include "Telnet.h"
@@ -20,6 +22,10 @@ using namespace std;
 
 #define DEFAULT_PORT "23"
 #define DEFAULT_SERVER "192.168.0.48"
+
+// Create static structure to store current state
+GRBLSTATUS GrblStatus;
+std::mutex mGrblStatus;
 
 int main(int argc, char **argv) {
   WSADATA wsaData;
