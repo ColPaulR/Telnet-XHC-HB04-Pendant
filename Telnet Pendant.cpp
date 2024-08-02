@@ -10,6 +10,7 @@
 #include <mutex>
 
 
+#include "GrblCode.h"
 #include "Telnet Pendant.h"
 #include "Telnet.h"
 
