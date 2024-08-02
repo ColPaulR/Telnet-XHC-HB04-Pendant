@@ -9,8 +9,7 @@
 #include <ws2tcpip.h>
 #include <mutex>
 
-
-#include "GrblCode.h"
+#include "GrblParser\GrblCode.h"
 #include "Telnet Pendant.h"
 #include "Telnet.h"
 
