@@ -2,9 +2,10 @@
 #ifndef GRLBSTASTUS_H
 #define GRLBSTASTUS_H
 
-#include <stdint.h>
-#include <stddef.h>
-#include <stdbool.h>
+// #include <stdint.h>
+// #include <stddef.h>
+// #include <stdbool.h>
+#include "GrblParser\GrblParser.h"
 
 // struct GRBLSTATUS
 // {
