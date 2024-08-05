@@ -2,7 +2,7 @@
 #include "GrblState.h"
 
 
-void GrblState()
+GrblState::GrblState()
 {
     // Initialize variables
     mtx.lock();
