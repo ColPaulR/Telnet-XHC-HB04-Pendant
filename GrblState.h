@@ -48,6 +48,7 @@ enum State : uint8_t
   Critical,    // You can't do anything but reset with CTRL-x or the reset button
   Undefined
 };
+
 class GrblState {
     uint8_t State;
     int isMpos;
