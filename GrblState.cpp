@@ -1,5 +1,5 @@
-#include "GrblState.h"
 #include <mutex>
+#include "GrblState.h"
 
 using namespace std; 
 std::mutex mlock;

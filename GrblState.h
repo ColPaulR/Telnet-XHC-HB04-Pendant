@@ -5,7 +5,7 @@
 // #include <stdint.h>
 // #include <stddef.h>
 // #include <stdbool.h>
-#include "GrblParser\GrblParser.h"
+#include "GrblParser\GrblParserC.h"
 
 // struct GRBLSTATUS
 // {
