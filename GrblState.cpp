@@ -1,12 +1,12 @@
+#include <threads>
 #include <mutex>
 #include "GrblState.h"
-
 
 GrblState::GrblState()
 {
     // Initialize variables
     mtx.lock();
-    unit_8 State=Undefined;
+    uint_8 State=Undefined;
     // isMpos; don't care
     // int nAxis; don't know
     // double axis_Position[MAX_N_AXIS]; don't know

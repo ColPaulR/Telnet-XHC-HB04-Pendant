@@ -49,27 +49,27 @@ enum State : uint8_t
   Undefined
 };
 class GrblState {
-      uint8_t State;
-  int isMpos;
-  int nAxis;
-  double axis_Position[MAX_N_AXIS];
-  double axis_Probe[MAX_N_AXIS];
-  // ignore axis_WCO for now as it is not currently used
-  double    axis_WCO[MAX_N_AXIS];
-  bool isG91;
-  bool isG21;
-  uint32_t feedrate;
-  int spindle;
-  uint32_t spindle_speed;
-  bool flood;
-  bool mist;
-  bool ProbeSuccessFlag;
-  bool NewProbeFlag = 0;
-  
-  std::mutex mtx;
+    uint8_t State;
+    int isMpos;
+    int nAxis;
+    double axis_Position[MAX_N_AXIS];
+    double axis_Probe[MAX_N_AXIS];
+    // ignore axis_WCO for now as it is not currently used
+    double    axis_WCO[MAX_N_AXIS];
+    bool isG91;
+    bool isG21;
+    uint32_t feedrate;
+    int spindle;
+    uint32_t spindle_speed;
+    bool flood;
+    bool mist;
+    bool ProbeSuccessFlag;
+    bool NewProbeFlag = 0;
+
+    std::mutex mtx;
 
     public:
-         GrblState();
+         GrblState(void);
 }
 
 #endif
