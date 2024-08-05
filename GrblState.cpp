@@ -2,12 +2,10 @@
 #include "GrblState.h"
 
 
-std::mutex mlock;
-
 void GrblState()
 {
     // Initialize variables
-    mlock.lock();
+    mtx.lock();
     unit_8 State=Undefined;
     // isMpos; don't care
     // int nAxis; don't know
@@ -24,5 +22,5 @@ void GrblState()
     //   bool mist;
     //   bool ProbeSuccessFlag;
     NewProbeFlag = 0;
-    mlock.unlock();
+    mtx.unlock();
 }

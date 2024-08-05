@@ -65,9 +65,11 @@ class GrblState {
   bool mist;
   bool ProbeSuccessFlag;
   bool NewProbeFlag = 0;
-    
+  
+  std::mutex mtx;
+
     public:
-        void GrblState();
+         GrblState();
 }
 
 #endif
