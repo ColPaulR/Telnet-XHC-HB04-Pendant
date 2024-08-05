@@ -2,6 +2,10 @@
 #ifndef GRLBSTASTUS_H
 #define GRLBSTASTUS_H
 
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
+
 // struct GRBLSTATUS
 // {
 //   uint8_t State;
