@@ -7,7 +7,6 @@
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <mutex>
 
 #include "GrblParser\GrblCode.h"
 #include "Telnet Pendant.h"
