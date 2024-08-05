@@ -1,14 +1,14 @@
 #include <mutex>
 #include "GrblState.h"
 
-using namespace std; 
+
 std::mutex mlock;
 
 void GrblState()
 {
     // Initialize variables
     mlock.lock();
-    State=Undefined;
+    unit_8 State=Undefined;
     // isMpos; don't care
     // int nAxis; don't know
     // double axis_Position[MAX_N_AXIS]; don't know
