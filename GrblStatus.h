@@ -56,7 +56,7 @@ class GrblStatus {
          void SetIsMpos (bool myIsMpos);
          void ShowDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis);
          void SpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed);
-         void SpindleCoolant(int spindle, bool flood, bool mist)
+         void SpindleCoolant(int spindle, bool flood, bool mist);
 };
 
 #endif
