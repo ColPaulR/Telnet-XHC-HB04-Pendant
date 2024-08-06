@@ -34,7 +34,7 @@ void GrblStatus::SetState(State NewState)
 bool GrblStatus::GetIsMpos ()
 {
     bool myReturn;
-    
+
     mtx.lock();
     myReturn = isMpos;
     mtx.unlock();
@@ -45,5 +45,18 @@ void GrblStatus::SetIsMpos (bool myIsMpos)
 {
     mtx.lock();
     isMpos = myIsMpos;
+    mtx.unlock();
+}
+
+void GrblStatus::ShowDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis)
+{
+    mtx.lock();
+    isMpos = isMpos = new_isMpos;
+    nAxis = new_n_axis;
+    for (int i = 0; i < n_axis; i++)
+    {
+        axis_Position[i] = new_axes[i];
+        axis_WCO[i] = new_wcos[i];
+    } 
     mtx.unlock();
 }

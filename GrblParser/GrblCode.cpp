@@ -35,7 +35,7 @@ void show_state(const char *state)
 
     // Record state to status
     myGrblStatus.SetState(myState);
-    
+
 #if SERIALDEBUG > 0
     // State state not handled above
     Serial.print("Grbl State ");
@@ -46,13 +46,14 @@ void show_state(const char *state)
 
 void show_dro(const pos_t *axes, const pos_t *wcos, bool isMpos, bool *limits, size_t n_axis)
 {
-    GrblStatus.isMpos = isMpos;
-    GrblStatus.nAxis = n_axis;
-    for (int i = 0; i < n_axis; i++)
-    {
-        GrblStatus.axis_Position[i] = axes[i];
-        GrblStatus.axis_WCO[i] = wcos[i];
-    }
+    GrblStatus::ShowDro (const pos_t *axes, const pos_t *wcos, bool isMpos, size_t n_axis);
+    // GrblStatus.isMpos = isMpos;
+    // GrblStatus.nAxis = n_axis;
+    // for (int i = 0; i < n_axis; i++)
+    // {
+    //     GrblStatus.axis_Position[i] = axes[i];
+    //     GrblStatus.axis_WCO[i] = wcos[i];
+    // }
 }
 
 // void  show_file(const char* filename, file_percent_t percent) {}

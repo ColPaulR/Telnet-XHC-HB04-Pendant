@@ -54,6 +54,8 @@ class GrblStatus {
          void SetState(State NewState);
          bool GetIsMpos();
          void SetIsMpos (bool myIsMpos);
+         void ShowDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis);
+
 };
 
 #endif
