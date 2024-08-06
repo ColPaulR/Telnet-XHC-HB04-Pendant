@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <mutex>
+#include "GrblStatus.h"
 
 using namespace std;
 

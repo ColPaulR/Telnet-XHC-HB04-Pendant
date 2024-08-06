@@ -34,6 +34,7 @@ void GrblStatus::SetState(State NewState)
 bool GrblStatus::GetIsMpos ()
 {
     bool myReturn;
+    
     mtx.lock();
     myReturn = isMpos;
     mtx.unlock();

@@ -52,7 +52,8 @@ class GrblStatus {
     public:
          GrblStatus();
          void SetState(State NewState);
-
+         bool GrblStatus::GetIsMpos();
+         void GrblStatus::SetIsMpos (bool myIsMpos);
 };
 
 #endif
