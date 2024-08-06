@@ -5,7 +5,7 @@
 GrblState::GrblState()
 {
     // Initialize variables
-    SetState(State.Undefined);
+    SetState(Undefined);
     // isMpos; don't care
     // int nAxis; don't know
     // double axis_Position[MAX_N_AXIS]; don't know
@@ -23,10 +23,10 @@ GrblState::GrblState()
     // NewProbeFlag = 0;
 }
 
-void GrblState::SetState(uint8_t NewState)
+void GrblState::SetState(State NewState)
 {
     // Initialize variables
     mtx.lock();
-    uint8_t State=NewState;
+    myState=NewState;
     mtx.unlock();
 }

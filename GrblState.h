@@ -52,7 +52,7 @@ enum State : uint8_t
 };
 
 class GrblState {
-    uint8_t State;
+    State myState;
     int isMpos;
     int nAxis;
     double axis_Position[MAX_N_AXIS];
