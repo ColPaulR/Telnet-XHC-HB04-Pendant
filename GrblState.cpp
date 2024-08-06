@@ -6,7 +6,7 @@ GrblState::GrblState()
 {
     // Initialize variables
     mtx.lock();
-    uin8_t State=Undefined;
+    uint8_t State=Undefined;
     // isMpos; don't care
     // int nAxis; don't know
     // double axis_Position[MAX_N_AXIS]; don't know
@@ -22,5 +22,13 @@ GrblState::GrblState()
     //   bool mist;
     //   bool ProbeSuccessFlag;
     NewProbeFlag = 0;
+    mtx.unlock();
+}
+
+GrblState::SetState(uint8_t NewState)
+{
+    // Initialize variables
+    mtx.lock();
+    uint8_t State=NewSTate;
     mtx.unlock();
 }
