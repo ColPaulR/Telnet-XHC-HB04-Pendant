@@ -25,7 +25,7 @@ GrblState::GrblState()
     mtx.unlock();
 }
 
-GrblState::SetState(uint8_t NewState)
+void GrblState::SetState(uint8_t NewState)
 {
     // Initialize variables
     mtx.lock();

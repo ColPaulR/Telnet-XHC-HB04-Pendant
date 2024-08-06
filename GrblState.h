@@ -73,7 +73,7 @@ class GrblState {
 
     public:
          GrblState();
-         SetState(uint8_t NewState);
+         void SetState(uint8_t NewState);
 
 };
 
