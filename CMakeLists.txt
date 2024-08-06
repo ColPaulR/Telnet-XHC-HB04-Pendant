@@ -22,8 +22,8 @@ add_executable (CMakeTarget "Telnet Pendant.cpp" "Telnet Pendant.h" "Telnet.cpp"
   "GrblParser/alarm.h"
   "GrblParser/e4math.c"
   "GrblParser/e4math.h"
-  "GrblState.h"
-  "GrblState.cpp"
+  "GrblStatus.h"
+  "GrblStatus.cpp"
   )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
