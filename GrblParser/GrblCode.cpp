@@ -46,7 +46,7 @@ void show_state(const char *state)
 
 void show_dro(const pos_t *axes, const pos_t *wcos, bool isMpos, bool *limits, size_t n_axis)
 {
-    GrblStatus::ShowDro (const pos_t *axes, const pos_t *wcos, bool isMpos, size_t n_axis);
+    myGrblStatus.ShowDro (axes, wcos, isMpos, n_axis);
     // GrblStatus.isMpos = isMpos;
     // GrblStatus.nAxis = n_axis;
     // for (int i = 0; i < n_axis; i++)
@@ -60,15 +60,17 @@ void show_dro(const pos_t *axes, const pos_t *wcos, bool isMpos, bool *limits, s
 
 void show_feed_spindle(uint32_t feedrate, uint32_t spindle_speed)
 {
-    GrblStatus.feedrate = feedrate;
-    GrblStatus.spindle_speed = spindle_speed;
+    myGrblStatus.SpindleFeed (feedrate, spindle_speed);
+// GrblStatus.feedrate = feedrate;
+    // GrblStatus.spindle_speed = spindle_speed;
 }
 
 void show_spindle_coolant(int spindle, bool flood, bool mist)
 {
-    GrblStatus.spindle = spindle;
-    GrblStatus.flood = flood;
-    GrblStatus.mist = mist;
+    SpindleCoolant(spindle, flood, mist);
+// GrblStatus.spindle = spindle;
+//     GrblStatus.flood = flood;
+//     GrblStatus.mist = mist;
 }
 
 void show_probe(const pos_t *axes, const bool probe_success, size_t n_axis)

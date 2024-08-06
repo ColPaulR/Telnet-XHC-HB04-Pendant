@@ -59,3 +59,20 @@ void GrblStatus::ShowDro (const pos_t *new_axes, const pos_t *new_wcos, bool new
     } 
     mtx.unlock();
 }
+
+void GrblStatus::SpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed)
+{
+    mtx.lock();
+    feedrate = new_feedrate;
+    spindle_speed = new_spindle_speed;
+    mtx.unlock();
+} 
+
+void GrblStatus::SpindleCoolant(int new_spindle, bool new_flood, bool new_mist)
+{
+    mtx.lock();
+    spindle = new_spindle;
+    flood = new_flood;
+    mist = new_mist;
+    mtx.unlock();
+} 
