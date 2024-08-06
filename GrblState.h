@@ -4,30 +4,8 @@
 
 #include <thread>
 #include <mutex>
-// #include <stdint.h>
-// #include <stddef.h>
-// #include <stdbool.h>
 #include "GrblParser\GrblParserC.h"
 
-// struct GRBLSTATUS
-// {
-//   uint8_t State;
-//   int isMpos;
-//   int nAxis;
-//   double axis_Position[MAX_N_AXIS];
-//   double axis_Probe[MAX_N_AXIS];
-//   // ignore axis_WCO for now as it is not currently used
-//   double    axis_WCO[MAX_N_AXIS];
-//   bool isG91;
-//   bool isG21;
-//   uint32_t feedrate;
-//   int spindle;
-//   uint32_t spindle_speed;
-//   bool flood;
-//   bool mist;
-//   bool ProbeSuccessFlag;
-//   bool NewProbeFlag = 0;
-// };
 
 // From FluidNC/FluidNC/src/Types.h with "enum class" changed to "enum"
 // From FluidNC/FluidNC/src/Report.cpp translates enum to string
@@ -52,6 +30,7 @@ enum class State // : uint8_t
 };
 
 class GrblState {
+  private:
     State myState;
     int isMpos;
     int nAxis;
@@ -68,12 +47,11 @@ class GrblState {
     bool mist;
     bool ProbeSuccessFlag;
     bool NewProbeFlag = 0;
-
     std::mutex mtx;
 
     public:
          GrblState();
-         void SetState(uint8_t NewState);
+         void SetState(State NewState);
 
 };
 
