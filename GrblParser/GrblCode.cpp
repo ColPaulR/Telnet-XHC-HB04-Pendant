@@ -61,22 +61,8 @@ void show_spindle_coolant(int spindle, bool flood, bool mist)
 
 void show_probe(const pos_t *axes, const bool probe_success, size_t n_axis)
 {
-    for (int i = 0; i < n_axis; i++)
-    {
-        GrblStatus.axis_Probe[i] = axes[i];
-    }
+    myGrblStatus.ShowProbe(axes, probe_success, n_axis)
 
-    // Process success flag
-    GrblStatus.ProbeSuccessFlag = probe_success;
-
-    // Allocate new structure and copy
-    GRBLSTATUS *tempStatus = new GRBLSTATUS(GrblStatus);
-
-    // Set flag to indicate G38 completed. Leave static copy of structure as no new probe flag
-    tempStatus->NewProbeFlag = true;
-
-    // Send a newly allocated structure that is initialize with current status
-    //rp2040.fifo.push_nb((uint32_t) tempStatus);
 }
 
 void end_status_report()

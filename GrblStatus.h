@@ -45,8 +45,9 @@ class GrblStatus {
     uint32_t spindle_speed;
     bool flood;
     bool mist;
-    bool ProbeSuccessFlag;
     bool NewProbeFlag = 0;
+    bool ProbeSuccessFlag;
+
     std::mutex mtx;
 
     public:
@@ -57,6 +58,7 @@ class GrblStatus {
          void ShowDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis);
          void SpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed);
          void SpindleCoolant(int spindle, bool flood, bool mist);
+         void ShowProbe(const pos_t *new_axes, const bool new_probe_success, size_t new_n_axis);
 };
 
 #endif

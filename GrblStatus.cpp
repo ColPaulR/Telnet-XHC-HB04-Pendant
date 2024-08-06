@@ -76,3 +76,19 @@ void GrblStatus::SpindleCoolant(int new_spindle, bool new_flood, bool new_mist)
     mist = new_mist;
     mtx.unlock();
 } 
+
+void GrblStatus::ShowProbe(const pos_t *new_axes, const bool new_probe_success, size_t new_n_axis)
+{
+    mtx.lock();
+    for (int i = 0; i < n_axis; i++)
+    {
+        axis_Probe[i] = new_axes[i];
+    }
+
+    // Process success flag
+    ProbeSuccessFlag = probe_success;
+    mtx.unlock();
+
+    // NEED LOGIC HERE TO HANDLE STATE TRANSITIONS
+}
+
