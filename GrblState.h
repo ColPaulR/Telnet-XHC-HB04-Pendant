@@ -73,6 +73,6 @@ class GrblState {
 
     public:
          GrblState();
-}
+};
 
 #endif
