@@ -2,7 +2,7 @@
 #include <string.h>
 // #include "GrblCode.h"
 #include "..\Telnet Pendant.h"
-#include "..\GrblState.h"
+#include "..\GrblStatus.h"
 
 // Data parsed from <...> status reports
 // void  show_limits(bool probe, const bool* limits, size_t n_axis) {};
