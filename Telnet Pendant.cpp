@@ -11,6 +11,7 @@
 #include "GrblParser\GrblCode.h"
 #include "Telnet Pendant.h"
 #include "Telnet.h"
+#include "GrblStatus.h"
 
 using namespace std;
 

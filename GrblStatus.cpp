@@ -1,11 +1,12 @@
 #include <thread>
 #include <mutex>
-#include "GrblState.h"
+#include "GrblStatus.h"
 
 GrblStatus::GrblStatus()
 {
     // Initialize variables
     SetState(State::Undefined);
+
     // isMpos; don't care
     // int nAxis; don't know
     // double axis_Position[MAX_N_AXIS]; don't know
@@ -25,8 +26,23 @@ GrblStatus::GrblStatus()
 
 void GrblStatus::SetState(State NewState)
 {
-    // Initialize variables
     mtx.lock();
     myState=NewState;
+    mtx.unlock();
+}
+
+bool GrblStatus::GetIsMpos ()
+{
+    bool myReturn;
+    mtx.lock();
+    myReturn = isMpos;
+    mtx.unlock();
+    reurn myReturn;
+}
+
+void GrblStatus::SetIsMpos (bool myIsMpos)
+{
+    mtx.lock();
+    isMpos = myIsMpos;
     mtx.unlock();
 }
