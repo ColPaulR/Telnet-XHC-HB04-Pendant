@@ -35,7 +35,7 @@
 // System states. The state variable primarily tracks the individual functions
 // to manage each without overlapping. It is also used as a messaging flag for
 // critical events.
-enum State : uint8_t
+enum class State // : uint8_t
 {
   Idle = 0,    // Must be zero.
   Alarm,       // In alarm state. Locks out all g-code processes. Allows settings access.

@@ -5,7 +5,7 @@
 GrblState::GrblState()
 {
     // Initialize variables
-    SetState(Undefined);
+    SetState(State::Undefined);
     // isMpos; don't care
     // int nAxis; don't know
     // double axis_Position[MAX_N_AXIS]; don't know
