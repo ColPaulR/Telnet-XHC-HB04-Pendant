@@ -2,7 +2,7 @@
 #include <mutex>
 #include "GrblState.h"
 
-GrblState::GrblState()
+GrblStatus::GrblStatus()
 {
     // Initialize variables
     SetState(State::Undefined);
@@ -23,7 +23,7 @@ GrblState::GrblState()
     // NewProbeFlag = 0;
 }
 
-void GrblState::SetState(State NewState)
+void GrblStatus::SetState(State NewState)
 {
     // Initialize variables
     mtx.lock();

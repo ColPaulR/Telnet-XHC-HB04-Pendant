@@ -23,8 +23,7 @@ using namespace std;
 #define DEFAULT_SERVER "192.168.0.48"
 
 // Create static structure to store current state
-GRBLSTATUS GrblStatus;
-std::mutex mGrblStatus;
+GrblStatus myGrblStatus;
 
 int main(int argc, char **argv) {
   WSADATA wsaData;

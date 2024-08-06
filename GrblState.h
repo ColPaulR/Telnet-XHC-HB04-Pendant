@@ -29,7 +29,7 @@ enum class State // : uint8_t
   Undefined
 };
 
-class GrblState {
+class GrblStatus {
   private:
     State myState;
     int isMpos;
@@ -50,7 +50,7 @@ class GrblState {
     std::mutex mtx;
 
     public:
-         GrblState();
+         GrblStatus();
          void SetState(State NewState);
 
 };

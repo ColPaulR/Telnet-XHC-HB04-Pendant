@@ -1,40 +1,41 @@
 // #include <Arduino.h>
 #include <string.h>
-#include "GrblCode.h"
+// #include "GrblCode.h"
 #include "..\Telnet Pendant.h"
+#include "..\GrblState.h"
 
 // Data parsed from <...> status reports
 // void  show_limits(bool probe, const bool* limits, size_t n_axis) {};
 void show_state(const char *state)
 {
+
     // From FluidNC/FluidNC/src/Report.cpp, possible string states are"
     //    "Idle", "Run" , "Jog", "Home", " Alarm", "Check", "Door:x", "Sleep"
 
     // Parse GRBL state; set to undefined by default
-    GrblStatus.State = State::Undefined;
+    State myState = State::Undefined;
 
     if (strncmp(state, "Run", 3) == 0)
     {
-        GrblStatus.State = State::Cycle;
-        return;
+        myState = State::Cycle;
     }
 
     if (strncmp(state, "Idle", 4) == 0)
     {
-        GrblStatus.State = State::Idle;
-        return;
+        myState = State::Idle;
     }
     if (strncmp(state, "Hold", 4) == 0)
     {
-        GrblStatus.State = State::Hold;
-        return;
+        myState = State::Hold;
     }
     if (strncmp(state, "Jog", 3) == 0)
     {
-        GrblStatus.State = State::Jog;
-        return;
+        myState = State::Jog;
     }
 
+    // Record state to status
+    myGrblStatus.SetState(myState);
+    
 #if SERIALDEBUG > 0
     // State state not handled above
     Serial.print("Grbl State ");
