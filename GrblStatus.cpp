@@ -1,5 +1,6 @@
 #include "GrblStatus.h"
 #include "SerialDebug.h"
+
 inline void GrblStatus::mylock()
 {
        mtx.lock();

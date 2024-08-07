@@ -3,7 +3,7 @@
 #define GRLBSTASTUS_H
 
 // #include <thread>
-// #include <mutex>
+#include <mutex>
 #include <atomic>
 
 #include "GrblParser\GrblParserC.h"
