@@ -4,7 +4,7 @@
 
 // #include <thread>
 // #include <mutex>
-// #include <atomic>
+#include <atomic>
 
 #include "GrblParser\GrblParserC.h"
 
