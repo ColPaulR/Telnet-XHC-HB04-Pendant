@@ -4,6 +4,8 @@
 
 #include <thread>
 #include <mutex>
+#include <atomic>
+
 #include "GrblParser\GrblParserC.h"
 
 
@@ -33,7 +35,7 @@ class GrblStatus {
   private:
     State myState;
     int isMpos;
-    int nAxis;
+    size_t nAxis;
     double axis_Position[MAX_N_AXIS];
     double axis_Probe[MAX_N_AXIS];
     // ignore axis_WCO for now as it is not currently used
@@ -48,18 +50,22 @@ class GrblStatus {
     bool NewProbeFlag = 0;
     bool ProbeSuccessFlag;
 
+    std::atomic_flag lock = ATOMIC_FLAG_INIT;
     std::mutex mtx;
+
+    inline void mylock();
+    inline void myunlock();
 
     public:
          GrblStatus();
-         void SetState(State NewState);
          bool GetIsMpos();
+         void SetState(State NewState);
          void SetIsMpos (bool myIsMpos);
-         void ShowDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis);
-         void SpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed);
-         void SpindleCoolant(int spindle, bool flood, bool mist);
-         void ShowProbe(const pos_t *new_axes, const bool new_probe_success, size_t new_n_axis);
-         void ShowGcodeModes(int spindle, bool mist, bool flood, bool isG21, bool isG91);
+         void SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis);
+         void SetSpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed);
+         void SetSpindleCoolant(int spindle, bool flood, bool mist);
+         void SetProbe(const pos_t *new_axes, const bool new_probe_success, size_t new_n_axis);
+         void SetGcodeModes(int spindle, bool mist, bool flood, bool isG21, bool isG91);
 
 };
 

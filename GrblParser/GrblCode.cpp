@@ -46,22 +46,22 @@ void show_state(const char *state)
 
 void show_dro(const pos_t *axes, const pos_t *wcos, bool isMpos, bool *limits, size_t n_axis)
 {
-    myGrblStatus.ShowDro (axes, wcos, isMpos, n_axis);
+    myGrblStatus.SetDro (axes, wcos, isMpos, n_axis);
 }
 
 void show_feed_spindle(uint32_t feedrate, uint32_t spindle_speed)
 {
-    myGrblStatus.SpindleFeed (feedrate, spindle_speed);
+    myGrblStatus.SetSpindleFeed (feedrate, spindle_speed);
 }
 
 void show_spindle_coolant(int spindle, bool flood, bool mist)
 {
-    myGrblStatus.SpindleCoolant(spindle, flood, mist);
+    myGrblStatus.SetSpindleCoolant(spindle, flood, mist);
 }
 
 void show_probe(const pos_t *axes, const bool probe_success, size_t n_axis)
 {
-    myGrblStatus.ShowProbe(axes, probe_success, n_axis);
+    myGrblStatus.SetProbe(axes, probe_success, n_axis);
 }
 
 void end_status_report()
@@ -107,7 +107,7 @@ void show_gcode_modes(struct gcode_modes *modes)
         isG91 = true;
     }
 
-    myGrblStatus.ShowGcodeModes(spindle, mist, flood, isG21, isG91);
+    myGrblStatus.SetGcodeModes(spindle, mist, flood, isG21, isG91);
 
     // Send a newly allocated structure that is initialize with current status
     //rp2040.fifo.push_nb((uint32_t) new GRBLSTATUS(GrblStatus));
