@@ -73,38 +73,41 @@ void end_status_report()
 // [GC: messages
 void show_gcode_modes(struct gcode_modes *modes)
 {
-    // update GrblStatus with new modes
-
+    int spindle=-1;
+    bool mist, flood. isG21, isG91;
+    
     // Spindle values
     if (!strcmp((modes->spindle), "Off"))
-        GrblStatus.spindle = 0;
+        spindle = 0;
     if (!strcmp((modes->spindle), "CW"))
-        GrblStatus.spindle = 1;
+        spindle = 1;
     if (!strcmp((modes->spindle), "CCW"))
-        GrblStatus.spindle = 2;
+        spindle = 2;
 
-    GrblStatus.mist=(!strcmp(modes->mist, "On"));
-    GrblStatus.flood=(!strcmp(modes->flood, "On"));
+    mist=(!strcmp(modes->mist, "On"));
+    flood=(!strcmp(modes->flood, "On"));
 
     // Inches or mm?
     if (!strcmp(modes->units, "In"))
     {
-        GrblStatus.isG21 = false;
+        isG21 = false;
     }
     if (!strcmp(modes->units, "mm"))
     {
-        GrblStatus.isG21 = true;
+        isG21 = true;
     }
 
     // Relative or absolute
     if (!strcmp(modes->distance, "Rel"))
     {
-        GrblStatus.isG91 = false;
+        isG91 = false;
     }
     if (!strcmp(modes->distance, "Abs"))
     {
-        GrblStatus.isG91 = true;
+        isG91 = true;
     }
+
+    myGrblStatus.ShowGcodeModes(spindle, mist, flood, isG21, isG91);
 
     // Send a newly allocated structure that is initialize with current status
     //rp2040.fifo.push_nb((uint32_t) new GRBLSTATUS(GrblStatus));

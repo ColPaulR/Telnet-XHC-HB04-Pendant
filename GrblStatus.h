@@ -59,6 +59,8 @@ class GrblStatus {
          void SpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed);
          void SpindleCoolant(int spindle, bool flood, bool mist);
          void ShowProbe(const pos_t *new_axes, const bool new_probe_success, size_t new_n_axis);
+         void ShowGcodeModes(int spindle, bool mist, bool flood, bool isG21, bool isG91);
+
 };
 
 #endif

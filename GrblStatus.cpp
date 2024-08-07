@@ -92,3 +92,14 @@ void GrblStatus::ShowProbe(const pos_t *new_axes, const bool probe_success, size
     // NEED LOGIC HERE TO HANDLE STATE TRANSITIONS
 }
 
+void GrblStatus::ShowGcodeModes(int new_spindle, bool new_mist, bool new_flood, bool new_isG21, bool new_isG91)
+{
+    mtx.lock();
+    spindle = new_spindle;
+    mist = new_mist;
+    flood = new_flood;
+    isG21 = new_isG21;
+    isG91 = new_isG91;
+    mtx.unlock();
+}
+
