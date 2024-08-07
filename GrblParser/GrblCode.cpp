@@ -73,7 +73,7 @@ void end_status_report()
 // [GC: messages
 void show_gcode_modes(struct gcode_modes *modes)
 {
-    int spindle=-1;
+    int spindle;
     bool mist, flood, isG21, isG91;
     
     // Spindle values
