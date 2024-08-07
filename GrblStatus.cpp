@@ -4,7 +4,7 @@
 inline void GrblStatus::mylock()
 {
     //    mtx.lock();
-
+    // Use spinlock vs. mutex to be more efficient
      while (lock.test_and_set(std::memory_order_acquire)) // acquire lock
         {
             // Since C++20, it is possible to update atomic_flag's
@@ -20,6 +20,7 @@ inline void GrblStatus::mylock()
 inline void GrblStatus::myunlock()
 {
     //    mtx.unlock();
+    // Use spinlock vs. mutex to be more efficient
     lock.clear(std::memory_order_release); // release lock
 
 }
