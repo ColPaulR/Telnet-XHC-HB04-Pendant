@@ -61,8 +61,7 @@ void show_spindle_coolant(int spindle, bool flood, bool mist)
 
 void show_probe(const pos_t *axes, const bool probe_success, size_t n_axis)
 {
-    myGrblStatus.ShowProbe(axes, probe_success, n_axis)
-
+    myGrblStatus.ShowProbe(axes, probe_success, n_axis);
 }
 
 void end_status_report()
