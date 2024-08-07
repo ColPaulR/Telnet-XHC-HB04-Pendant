@@ -4,6 +4,8 @@
 
 #include <thread>
 #include <mutex>
+#include <atomic>
+
 #include "GrblParser\GrblParserC.h"
 
 
@@ -48,6 +50,7 @@ class GrblStatus {
     bool NewProbeFlag = 0;
     bool ProbeSuccessFlag;
 
+    std::atomic_flag lock = ATOMIC_FLAG_INIT;
     std::mutex mtx;
 
     public:

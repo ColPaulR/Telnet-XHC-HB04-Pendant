@@ -1,6 +1,14 @@
-#include <thread>
-#include <mutex>
 #include "GrblStatus.h"
+
+inline void mylock()
+{
+       mtx.lock();
+}
+
+inline void myunlock()
+{
+       mtx.unlock();
+}
 
 GrblStatus::GrblStatus()
 {
@@ -26,9 +34,9 @@ GrblStatus::GrblStatus()
 
 void GrblStatus::SetState(State NewState)
 {
-    mtx.lock();
+    mylock();
     myState=NewState;
-    mtx.unlock();
+    myunlock();
 }
 
 bool GrblStatus::GetIsMpos ()
