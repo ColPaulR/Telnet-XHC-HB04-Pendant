@@ -1,5 +1,5 @@
 #include "GrblStatus.h"
-
+#include "SerialDebug.h"
 inline void GrblStatus::mylock()
 {
        mtx.lock();
@@ -43,21 +43,21 @@ bool GrblStatus::GetIsMpos ()
 {
     bool myReturn;
 
-    mtx.lock();
+    mylock();
     myReturn = isMpos;
-    mtx.unlock();
+    myunlock();
     return myReturn;
 }
 
 void GrblStatus::SetIsMpos (bool myIsMpos)
 {
-    mtx.lock();
+    mylock();
     isMpos = myIsMpos;
-    mtx.unlock();
+    myunlock();
 }
 
 void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis){
-    mtx.lock();
+    mylock();
     isMpos = isMpos = new_isMpos;
     nAxis = new_n_axis;
     for (int i = 0; i < new_n_axis; i++)
@@ -65,29 +65,29 @@ void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_
         axis_Position[i] = new_axes[i];
         axis_WCO[i] = new_wcos[i];
     } 
-    mtx.unlock();
+    myunlock();
 }
 
 void GrblStatus::SetSpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed)
 {
-    mtx.lock();
+    mylock();
     feedrate = new_feedrate;
     spindle_speed = new_spindle_speed;
-    mtx.unlock();
+    myunlock();
 } 
 
 void GrblStatus::SetSpindleCoolant(int new_spindle, bool new_flood, bool new_mist)
 {
-    mtx.lock();
+    mylock();
     spindle = new_spindle;
     flood = new_flood;
     mist = new_mist;
-    mtx.unlock();
+    myunlock();
 } 
 
 void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_t n_axis)
 {
-    mtx.lock();
+    mylock();
     for (int i = 0; i < n_axis; i++)
     {
         axis_Probe[i] = new_axes[i];
@@ -95,19 +95,19 @@ void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_
 
     // Process success flag
     ProbeSuccessFlag = probe_success;
-    mtx.unlock();
+    myunlock();
 
     // NEED LOGIC HERE TO HANDLE STATE TRANSITIONS
 }
 
 void GrblStatus::SetGcodeModes(int new_spindle, bool new_mist, bool new_flood, bool new_isG21, bool new_isG91)
 {
-    mtx.lock();
+    mylock();
     spindle = new_spindle;
     mist = new_mist;
     flood = new_flood;
     isG21 = new_isG21;
     isG91 = new_isG91;
-    mtx.unlock();
+    myunlock();
 }
 
