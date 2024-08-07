@@ -1,11 +1,11 @@
 #include "GrblStatus.h"
 
-inline void mylock()
+inline void GrblStatus::mylock()
 {
        mtx.lock();
 }
 
-inline void myunlock()
+inline void GrblStatus::myunlock()
 {
        mtx.unlock();
 }
