@@ -74,7 +74,7 @@ void end_status_report()
 void show_gcode_modes(struct gcode_modes *modes)
 {
     int spindle=-1;
-    bool mist, flood. isG21, isG91;
+    bool mist, flood, isG21, isG91;
     
     // Spindle values
     if (!strcmp((modes->spindle), "Off"))
@@ -112,37 +112,3 @@ void show_gcode_modes(struct gcode_modes *modes)
     // Send a newly allocated structure that is initialize with current status
     //rp2040.fifo.push_nb((uint32_t) new GRBLSTATUS(GrblStatus));
 }
-
-// void  handle_other(char *field)
-// // static void parse_probe_report(char *field)
-// {
-//     // The report wrapper, already removed, is [PRB:...]
-//     // The body for [PRB:1095.000,105.000,-49.880,0.000:1] is, for example,
-//     //   1095.000,105.000,-49.880,0.000:1
-
-//     char *next;
-
-//     size_t n_axis = 0;
-//     pos_t axes[MAX_N_AXIS];
-
-//     // Separate position from success
-//     if (!split(field, &next, '|'))
-//         // Return if split fails
-//         return;
-
-//     // Process positon
-//     n_axis = parse_axes(field, axes);
-
-//  for (int i = 0; i < n_axis; i++)
-//     {
-//         GrblStatus.axis_Probe[i] = axes[i];
-//     }
-
-//     // Process success flag
-//     GrblStatus.ProbeFlag = false;
-//     if (*next == '1')
-//         GrblStatus.ProbeFlag = true;
-
-//     // Send a newly allocated structure that is initialize with current status
-//     rp2040.fifo.push_nb((uint32_t) new GRBLSTATUS(GrblStatus));
-// }
