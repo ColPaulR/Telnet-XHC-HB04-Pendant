@@ -56,7 +56,7 @@ void GrblStatus::SetIsMpos (bool myIsMpos)
     mtx.unlock();
 }
 
-void GrblStatus::ShowDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis){
+void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis){
     mtx.lock();
     isMpos = isMpos = new_isMpos;
     nAxis = new_n_axis;
@@ -85,7 +85,7 @@ void GrblStatus::SpindleCoolant(int new_spindle, bool new_flood, bool new_mist)
     mtx.unlock();
 } 
 
-void GrblStatus::ShowProbe(const pos_t *new_axes, const bool probe_success, size_t n_axis)
+void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_t n_axis)
 {
     mtx.lock();
     for (int i = 0; i < n_axis; i++)
@@ -100,7 +100,7 @@ void GrblStatus::ShowProbe(const pos_t *new_axes, const bool probe_success, size
     // NEED LOGIC HERE TO HANDLE STATE TRANSITIONS
 }
 
-void GrblStatus::ShowGcodeModes(int new_spindle, bool new_mist, bool new_flood, bool new_isG21, bool new_isG91)
+void GrblStatus::SetGcodeModes(int new_spindle, bool new_mist, bool new_flood, bool new_isG21, bool new_isG91)
 {
     mtx.lock();
     spindle = new_spindle;
