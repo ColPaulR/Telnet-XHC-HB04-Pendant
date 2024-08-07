@@ -53,6 +53,9 @@ class GrblStatus {
     std::atomic_flag lock = ATOMIC_FLAG_INIT;
     std::mutex mtx;
 
+    inline void GrblStatus::mylock();
+    inline void GrblStatus::myunlock();
+
     public:
          GrblStatus();
          void SetState(State NewState);
