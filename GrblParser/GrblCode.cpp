@@ -51,12 +51,12 @@ void show_dro(const pos_t *axes, const pos_t *wcos, bool isMpos, bool *limits, s
 
 void show_feed_spindle(uint32_t feedrate, uint32_t spindle_speed)
 {
-    myGrblStatus.SpindleFeed (feedrate, spindle_speed);
+    myGrblStatus.SetSpindleFeed (feedrate, spindle_speed);
 }
 
 void show_spindle_coolant(int spindle, bool flood, bool mist)
 {
-    myGrblStatus.SpindleCoolant(spindle, flood, mist);
+    myGrblStatus.SetSpindleCoolant(spindle, flood, mist);
 }
 
 void show_probe(const pos_t *axes, const bool probe_success, size_t n_axis)

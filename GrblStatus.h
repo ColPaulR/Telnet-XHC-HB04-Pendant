@@ -35,7 +35,7 @@ class GrblStatus {
   private:
     State myState;
     int isMpos;
-    int nAxis;
+    size_t nAxis;
     double axis_Position[MAX_N_AXIS];
     double axis_Probe[MAX_N_AXIS];
     // ignore axis_WCO for now as it is not currently used
