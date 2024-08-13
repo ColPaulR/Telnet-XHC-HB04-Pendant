@@ -269,8 +269,8 @@ jobs:
       with:
         # path: ${{ matrix.config.artifact }}-${{ steps.git.outputs.tag }}.7z
         # name: ${{ matrix.config.artifact }}-${{ steps.git.outputs.tag }}.7z
-        path: build/CMakeTarget.exe
-        name: build/CMakeTarget.exe
+        path: build\CMakeTarget.exe
+        name: build\CMakeTarget.exe
 
   release:
     if: contains(github.ref, 'tags/v')
