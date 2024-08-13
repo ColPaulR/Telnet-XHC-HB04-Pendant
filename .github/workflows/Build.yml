@@ -260,16 +260,17 @@ jobs:
     - name: Install Strip
       run: cmake --install build --prefix instdir --strip
 
-    - name: Pack
-      # working-directory: instdir
-      run: cmake -E tar cfv ../${{ matrix.config.artifact }}-${{ steps.git.outputs.tag }}.7z --format=7zip .
+    # - name: Pack
+    #   # working-directory: instdir
+    #   run: cmake -E tar cfv ../${{ matrix.config.artifact }}-${{ steps.git.outputs.tag }}.7z --format=7zip .
 
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        path: ${{ matrix.config.artifact }}-${{ steps.git.outputs.tag }}.7z
-        name: ${{ matrix.config.artifact }}-${{ steps.git.outputs.tag }}.7zwip
-
+        # path: ${{ matrix.config.artifact }}-${{ steps.git.outputs.tag }}.7z
+        # name: ${{ matrix.config.artifact }}-${{ steps.git.outputs.tag }}.7z
+        path: build/CMakeTarget.exe
+        name: build/CMakeTarget.exe
 
   release:
     if: contains(github.ref, 'tags/v')
