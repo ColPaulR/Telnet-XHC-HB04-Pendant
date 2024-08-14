@@ -1,5 +1,6 @@
 #include "GrblStatus.h"
 #include "SerialDebug.h"
+#include <iostream>
 
 inline void GrblStatus::mylock()
 {
