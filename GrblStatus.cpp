@@ -81,6 +81,10 @@ void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_
         axis_WCO[i] = new_wcos[i];
     } 
     myunlock();
+
+    #if  (GRBL_STATUS_PARSE_ECHO)
+        cout << "SetDRO";
+    #endif
 }
 
 void GrblStatus::SetSpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed)
