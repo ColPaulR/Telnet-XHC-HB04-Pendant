@@ -210,6 +210,7 @@ jobs:
 
         execute_process(COMMAND ccache -p)
         execute_process(COMMAND ccache -z)
+        set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "TelnetGrbl")
 
         execute_process(
           COMMAND cmake --build build
