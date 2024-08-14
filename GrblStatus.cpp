@@ -2,6 +2,8 @@
 #include "SerialDebug.h"
 #include <iostream>
 
+using namespace std;
+
 inline void GrblStatus::mylock()
 {
     //    mtx.lock();
