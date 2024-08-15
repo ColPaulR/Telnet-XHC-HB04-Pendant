@@ -86,7 +86,7 @@ void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
-        #include GrblParser/GrblCode.h
+        #include "GrblParser/GrblCode.h"
         cout << "SetDRO: ";
         for (int i = 0; i < new_n_axis; i++)
         {
@@ -139,7 +139,7 @@ void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
-        #include GrblParser/GrblCode.h
+        #include "GrblParser/GrblCode.h"
         cout << "SetProbe: ";
         for (int i = 0; i < new_n_axis; i++)
         {
