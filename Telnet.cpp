@@ -63,7 +63,7 @@ bool MyTelnet::TelnetConnect(const char *szServer, const char *szPort)
   return MySocket;
 }
 
-int MyTelnet::TelnetSend(char *szSend) {
+int MyTelnet::Send(char *szSend) {
   int iResult;
   int iResult2;
 
@@ -88,28 +88,29 @@ int MyTelnet::TelnetSend(char *szSend) {
   return (iResult);
 }
 
-void MyTelnet::TelnetTask() {
+void MyTelnet::Task() {
   char recvbuf[DEFAULT_BUFLEN+1];
   int iResult;
   int recvbuflen = DEFAULT_BUFLEN;
 
-  iResult = recv(MySocket, recvbuf, recvbuflen, 0);
-  if (iResult > 0) {
-    // Send 1 character at a time to GRBLParser.
-    for (int iLooper = 0; iLooper < iResult; iLooper++) {
-      collect(recvbuf[iLooper]);
-    }
-    #if (GRBL_STATUS_ECHO)
-      // Ensure buffer is null terminated to handle as string
-      recvbuf[iResult] = 0;
-      puts(recvbuf);
-    #endif
-    // printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
-  } else if (iResult == 0)
-    printf("Connection closed\n");
-  else
-    printf("recv failed with error: %d\n", WSAGetLastError());
-
+  do {
+    iResult = recv(MySocket, recvbuf, recvbuflen, 0);
+    if (iResult > 0) {
+      // Send 1 character at a time to GRBLParser.
+      for (int iLooper = 0; iLooper < iResult; iLooper++) {
+        collect(recvbuf[iLooper]);
+      }
+      #if (GRBL_STATUS_ECHO)
+        // Ensure buffer is null terminated to handle as string
+        recvbuf[iResult] = 0;
+        puts(recvbuf);
+      #endif
+      // printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
+    } else if (iResult == 0)
+      printf("Connection closed\n");
+    else
+      printf("recv failed with error: %d\n", WSAGetLastError());
+  } while (1);
   return;
 }
 

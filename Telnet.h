@@ -24,9 +24,9 @@ class MyTelnet
     WSADATA wsaData;
   
     public:
-        bool TelnetConnect(const char *szServer, const char *szPort);
-        int TelnetSend(char *szSend);
-        void TelnetTask();
+        bool Connect(const char *szServer, const char *szPort);
+        int Send(char *szSend);
+        void Task();
         int Initialize();
         ~MyTelnet();
 };
