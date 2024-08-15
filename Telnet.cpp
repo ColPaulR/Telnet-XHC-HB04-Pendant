@@ -63,12 +63,12 @@ bool MyTelnet::TelnetConnect(const char *szServer, const char *szPort)
   return MySocket;
 }
 
-int TelnetSend(char *szSend) {
+int MyTelnet::TelnetSend(char *szSend) {
   int iResult;
   int iResult2;
 
   // Send an initial buffer
-  iResult = send(this.MySocket, szSend, (int)strlen(szSend), 0);
+  iResult = send(MySocket, szSend, (int)strlen(szSend), 0);
   if (iResult == SOCKET_ERROR) {
     iResult2 = WSAGetLastError();
     switch (iResult2) {
@@ -79,7 +79,7 @@ int TelnetSend(char *szSend) {
     default:
       // Unhandled error. Print and quit
       printf("send failed with error: %d\n", iResult2);
-      closesocket(this.MySocket);
+      closesocket(MySocket);
       WSACleanup();
       exit(1);
       break;
@@ -88,12 +88,12 @@ int TelnetSend(char *szSend) {
   return (iResult);
 }
 
-void TelnetTask() {
+void MyTelnet::TelnetTask() {
   char recvbuf[DEFAULT_BUFLEN+1];
   int iResult;
   int recvbuflen = DEFAULT_BUFLEN;
 
-  iResult = recv(this.MySocket, recvbuf, recvbuflen, 0);
+  iResult = recv(MySocket, recvbuf, recvbuflen, 0);
   if (iResult > 0) {
     // Send 1 character at a time to GRBLParser.
     for (int iLooper = 0; iLooper < iResult; iLooper++) {
