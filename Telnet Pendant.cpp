@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
   MyTelnet myTelnet;
 
   // Initialize Winsock
-  iresult =  MyTelnet.Initialize();
+  iResult =  MyTelnet.Initialize();
   if (iResult != 0) {
     printf("WSAStartup failed with error: %d\n", iResult);
     return false;
