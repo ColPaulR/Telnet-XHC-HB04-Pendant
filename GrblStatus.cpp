@@ -122,7 +122,7 @@ void GrblStatus::SetSpindleCoolant(int new_spindle, bool new_flood, bool new_mis
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
-        cout << "SetSpindleCoolant: F" << new_feedrate << " S" << new_spindle_speed  << " M" << new_mist << endl;
+        cout << "SetSpindleCoolant: S" << new_spindle_speed  << " Flood" << new_flood << " M" << new_mist << endl;
     #endif
 } 
 
@@ -141,11 +141,11 @@ void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_
     #if  (GRBL_STATUS_PARSE_ECHO)
         #include "GrblParser/GrblCode.h"
         cout << "SetProbe: ";
-        for (int i = 0; i < new_n_axis; i++)
+        for (int i = 0; i < n_axis; i++)
         {
             cout << GRBLAxisLetters[i] << new_axes[i];
         } 
-        cout << "\Success:" << probe_success << endl;
+        cout << " Success:" << probe_success << endl;
     #endif
 
     // NEED LOGIC HERE TO HANDLE STATE TRANSITIONS
@@ -161,8 +161,7 @@ void GrblStatus::SetGcodeModes(int new_spindle, bool new_mist, bool new_flood, b
     isG91 = new_isG91;
     myunlock();
     #if  (GRBL_STATUS_PARSE_ECHO)
-        cout << "SetGcodeModes: S" << new_spindle_speed  << " M" << new_mist 
-            << " Flood" << new_flood << << " G21" << new_isG21<< " G91" << new_isG91 << endl;
+        cout << "SetGcodeModes: S" << new_spindle  << " M" << new_mist  << " Flood" << new_flood << << " G21" << new_isG21<< " G91" << new_isG91 << endl;
     #endif
 }
 
