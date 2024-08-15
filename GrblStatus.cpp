@@ -86,7 +86,18 @@ void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
-        cout << "SetDRO";
+        #include GrblParser/GrblCode.h
+        cout << "SetDRO: ";
+        for (int i = 0; i < new_n_axis; i++)
+        {
+            cout << GRBLAxisLetters[i] << new_axes[i];
+        } 
+        cout << "\tWCO:";
+        for (int i = 0; i < new_n_axis; i++)
+        {
+            cout << GRBLAxisLetters[i] << new_wcos[i];
+        } 
+        cout  << endl;
     #endif
 }
 
@@ -96,6 +107,10 @@ void GrblStatus::SetSpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_spe
     feedrate = new_feedrate;
     spindle_speed = new_spindle_speed;
     myunlock();
+
+    #if  (GRBL_STATUS_PARSE_ECHO)
+        cout << "SetSpindleFeed: F" << new_feedrate << " S" << new_spindle_speed  << endl;
+    #endif
 } 
 
 void GrblStatus::SetSpindleCoolant(int new_spindle, bool new_flood, bool new_mist)
@@ -105,6 +120,10 @@ void GrblStatus::SetSpindleCoolant(int new_spindle, bool new_flood, bool new_mis
     flood = new_flood;
     mist = new_mist;
     myunlock();
+
+    #if  (GRBL_STATUS_PARSE_ECHO)
+        cout << "SetSpindleCoolant: F" << new_feedrate << " S" << new_spindle_speed  << " M" << new_mist << endl;
+    #endif
 } 
 
 void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_t n_axis)
@@ -119,6 +138,16 @@ void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_
     ProbeSuccessFlag = probe_success;
     myunlock();
 
+    #if  (GRBL_STATUS_PARSE_ECHO)
+        #include GrblParser/GrblCode.h
+        cout << "SetProbe: ";
+        for (int i = 0; i < new_n_axis; i++)
+        {
+            cout << GRBLAxisLetters[i] << new_axes[i];
+        } 
+        cout << "\Success:" << probe_success << endl;
+    #endif
+
     // NEED LOGIC HERE TO HANDLE STATE TRANSITIONS
 }
 
@@ -131,5 +160,9 @@ void GrblStatus::SetGcodeModes(int new_spindle, bool new_mist, bool new_flood, b
     isG21 = new_isG21;
     isG91 = new_isG91;
     myunlock();
+    #if  (GRBL_STATUS_PARSE_ECHO)
+        cout << "SetGcodeModes: S" << new_spindle_speed  << " M" << new_mist 
+            << " Flood" << new_flood << << " G21" << new_isG21<< " G91" << new_isG91 << endl;
+    #endif
 }
 
