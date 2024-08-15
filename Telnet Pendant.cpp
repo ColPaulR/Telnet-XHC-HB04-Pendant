@@ -28,9 +28,10 @@ GrblStatus myGrblStatus;
 
 int main(int argc, char **argv) {
   WSADATA wsaData;
-  SOCKET ConnectSocket = INVALID_SOCKET;
+  // SOCKET ConnectSocket = INVALID_SOCKET;
   char sendbuf[] = "/n?/n?/n";
   int iResult;
+  MyTelnet myTelnet;
 
   // Initialize Winsock
   iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -40,20 +41,20 @@ int main(int argc, char **argv) {
   }
 
   // Initial here
-  ConnectSocket = TelnetConnect(DEFAULT_SERVER, DEFAULT_PORT);
+  myTelnet.TelnetConnect(DEFAULT_SERVER, DEFAULT_PORT);
 
-  iResult = TelnetSend(ConnectSocket, sendbuf);
+  iResult = myTelnet.TelnetSend(ConnectSocket, sendbuf);
 
   printf("Bytes Sent: %ld\n", iResult);
 
   // Do main loop
   
   do {
-    TelnetTask(ConnectSocket);
+    myTelnet.TelnetTask(ConnectSocket);
   } while (1);
 
   // cleanup
-  closesocket(ConnectSocket);
+  closesocket(myTelnet.MySocket);
   WSACleanup();
 
   return 0;

@@ -10,13 +10,12 @@
 
 #include "GrblParser/GrblParserC.h"
 #include "SerialDebug.h"
+#include "Telnet.h"
 
-#define DEFAULT_BUFLEN 512
-
-SOCKET TelnetConnect(const char *szServer, const char *szPort) {
+bool MyTelnet::TelnetConnect(const char *szServer, const char *szPort) {
   struct addrinfo *result = NULL, *ptr = NULL, hints;
   int iResult;
-  SOCKET MySocket;
+  // SOCKET MySocket;
 
   ZeroMemory(&hints, sizeof(hints));
   hints.ai_family = AF_UNSPEC;
@@ -28,7 +27,7 @@ SOCKET TelnetConnect(const char *szServer, const char *szPort) {
   if (iResult != 0) {
     printf("getaddrinfo failed with error: %d\n", iResult);
     WSACleanup();
-    return 1;
+    return false;
   }
 
   // Attempt to connect to an address until one succeeds

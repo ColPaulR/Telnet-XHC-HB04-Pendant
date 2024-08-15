@@ -51,7 +51,7 @@ class GrblStatus {
     bool ProbeSuccessFlag;
 
     std::atomic_flag lock = ATOMIC_FLAG_INIT;
-    std::mutex mtx;
+    // std::mutex mtx;
 
     inline void mylock();
     inline void myunlock();
