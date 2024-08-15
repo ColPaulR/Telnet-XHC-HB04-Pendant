@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
   printf("Bytes Sent: %ld\n", iResult);
 
   // Spawn Telnet task thread
-  thread taskTelnet(myTelnet.Task);
+  thread taskTelnet(&myTelnet::Task);
 
   // wait for thread to finish
   taskTelnet.join();
