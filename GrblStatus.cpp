@@ -48,7 +48,6 @@ GrblStatus::GrblStatus()
     //   bool flood;
     //   bool mist;
     //   bool ProbeSuccessFlag;
-    // NewProbeFlag = 0;
 }
 
 void GrblStatus::SetState(State NewState)
