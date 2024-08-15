@@ -63,12 +63,12 @@ bool MyTelnet::TelnetConnect(const char *szServer, const char *szPort)
   return MySocket;
 }
 
-int TelnetSend(SOCKET ConnectSocket, char *szSend) {
+int TelnetSend(char *szSend) {
   int iResult;
   int iResult2;
 
   // Send an initial buffer
-  iResult = send(ConnectSocket, szSend, (int)strlen(szSend), 0);
+  iResult = send(MySocket, szSend, (int)strlen(szSend), 0);
   if (iResult == SOCKET_ERROR) {
     iResult2 = WSAGetLastError();
     switch (iResult2) {
@@ -79,7 +79,7 @@ int TelnetSend(SOCKET ConnectSocket, char *szSend) {
     default:
       // Unhandled error. Print and quit
       printf("send failed with error: %d\n", iResult2);
-      closesocket(ConnectSocket);
+      closesocket(MySocket);
       WSACleanup();
       exit(1);
       break;
@@ -88,7 +88,7 @@ int TelnetSend(SOCKET ConnectSocket, char *szSend) {
   return (iResult);
 }
 
-void TelnetTask(SOCKET ConnectSocket) {
+void TelnetTask() {
   char recvbuf[DEFAULT_BUFLEN+1];
   int iResult;
   int recvbuflen = DEFAULT_BUFLEN;

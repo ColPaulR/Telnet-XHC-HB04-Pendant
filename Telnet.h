@@ -9,10 +9,11 @@
 
 class MyTelnet
 {
+    SOCKET MySocket = INVALID_SOCKET;
+
     public:
-        SOCKET MySocket = INVALID_SOCKET;
 
         bool TelnetConnect(const char *szServer, const char *szPort);
-        int TelnetSend(SOCKET ConnectSocket, char *szSend);
-        void TelnetTask(SOCKET ConnectSocket);
+        int TelnetSend(char *szSend);
+        void TelnetTask();
 };

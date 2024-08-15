@@ -43,18 +43,18 @@ int main(int argc, char **argv) {
   // Initial here
   myTelnet.TelnetConnect(DEFAULT_SERVER, DEFAULT_PORT);
 
-  iResult = myTelnet.TelnetSend(ConnectSocket, sendbuf);
+  iResult = myTelnet.TelnetSend(sendbuf);
 
   printf("Bytes Sent: %ld\n", iResult);
 
   // Do main loop
   
   do {
-    myTelnet.TelnetTask(ConnectSocket);
+    myTelnet.TelnetTask();
   } while (1);
 
   // cleanup
-  closesocket(myTelnet.MySocket);
+  // closesocket(myTelnet.MySocket);
   WSACleanup();
 
   return 0;
