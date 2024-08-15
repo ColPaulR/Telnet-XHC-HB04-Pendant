@@ -12,7 +12,7 @@
 #include "SerialDebug.h"
 #include "Telnet.h"
 
-bool MyTelnet::TelnetConnect(const char *szServer, const char *szPort) 
+bool MyTelnet::Connect(const char *szServer, const char *szPort) 
 {
   struct addrinfo *result = NULL, *ptr = NULL, hints;
   int iResult;

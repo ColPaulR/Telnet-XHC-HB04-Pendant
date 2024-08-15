@@ -25,9 +25,9 @@ int main(int argc, char **argv) {
   }
 
   // Connect to server
-  myTelnet.TelnetConnect(DEFAULT_SERVER, DEFAULT_PORT);
+  myTelnet.Connect(DEFAULT_SERVER, DEFAULT_PORT);
 
-  iResult = myTelnet.TelnetSend(sendbuf);
+  iResult = myTelnet.Send(sendbuf);
 
   printf("Bytes Sent: %ld\n", iResult);
 
