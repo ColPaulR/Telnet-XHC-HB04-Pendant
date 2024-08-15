@@ -7,7 +7,7 @@
 
 #define DEFAULT_BUFLEN 512
 
-Class MyTelnet
+class MyTelnet
 {
     public:
         SOCKET MySocket = INVALID_SOCKET;
