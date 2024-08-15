@@ -15,4 +15,4 @@ class MyTelnet
         bool TelnetConnect(const char *szServer, const char *szPort);
         int TelnetSend(SOCKET ConnectSocket, char *szSend);
         void TelnetTask(SOCKET ConnectSocket);
-}
+};
