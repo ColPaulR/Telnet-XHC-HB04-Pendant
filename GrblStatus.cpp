@@ -1,6 +1,7 @@
+#include <iostream>
 #include "GrblStatus.h"
 #include "SerialDebug.h"
-#include <iostream>
+#include "GrblParser/GrblCode.h"
 
 using namespace std;
 
@@ -86,7 +87,7 @@ void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
-        #include "GrblParser/GrblCode.h"
+        // #include "GrblParser/GrblCode.h"
         cout << "SetDRO: ";
         for (int i = 0; i < new_n_axis; i++)
         {
@@ -122,7 +123,7 @@ void GrblStatus::SetSpindleCoolant(int new_spindle, bool new_flood, bool new_mis
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
-        cout << "SetSpindleCoolant: S" << new_spindle_speed  << " Flood" << new_flood << " M" << new_mist << endl;
+        cout << "SetSpindleCoolant: S" << new_spindle  << " Flood" << new_flood << " M" << new_mist << endl;
     #endif
 } 
 
@@ -139,7 +140,7 @@ void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
-        #include "GrblParser/GrblCode.h"
+        // #include "GrblParser/GrblCode.h"
         cout << "SetProbe: ";
         for (int i = 0; i < n_axis; i++)
         {
@@ -161,7 +162,7 @@ void GrblStatus::SetGcodeModes(int new_spindle, bool new_mist, bool new_flood, b
     isG91 = new_isG91;
     myunlock();
     #if  (GRBL_STATUS_PARSE_ECHO)
-        cout << "SetGcodeModes: S" << new_spindle  << " M" << new_mist  << " Flood" << new_flood << << " G21" << new_isG21<< " G91" << new_isG91 << endl;
+        cout << "SetGcodeModes: S" << new_spindle  << " M" << new_mist  << " Flood" << new_flood << " G21" << new_isG21<< " G91" << new_isG91 << endl;
     #endif
 }
 
