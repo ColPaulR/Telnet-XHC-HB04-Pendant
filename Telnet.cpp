@@ -112,3 +112,17 @@ void MyTelnet::TelnetTask() {
 
   return;
 }
+
+int MyTelnet::Initialize() {
+  // Initialize Winsock
+  return WSAStartup(MAKEWORD(2, 2), &wsaData);
+}
+
+MyTelnet::~MyTelnet() {
+  // cleanup
+  closesocket(MySocket);
+  WSACleanup();
+
+}
+
+  
