@@ -23,7 +23,7 @@ void TelnetThread()
 
   do {
     iResult = myTelnet.Read(recvbuf,recvbuflen);
-    
+
     if (iResult > 0) {
       // Send 1 character at a time to GRBLParser.
       for (int iLooper = 0; iLooper < iResult; iLooper++) {
@@ -64,6 +64,9 @@ int main(int argc, char **argv) {
 
   // Spawn Telnet task thread
   thread taskTelnet(TelnetThread);
+
+  // Test if taskTelent thread is still running
+  // if() taskTelnet.joinable())
 
   // wait for thread to finish
   taskTelnet.join();

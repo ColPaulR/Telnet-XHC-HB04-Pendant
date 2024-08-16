@@ -3,8 +3,9 @@
 #define GRLBSTASTUS_H
 
 // #include <thread>
-#include <mutex>
+// #include <mutex>
 #include <atomic>
+#include <chrono>
 
 #include "GrblParser\GrblParserC.h"
 
@@ -33,7 +34,7 @@ enum class State // : uint8_t
 
 class GrblStatus {
   private:
-    State myState;
+    State myState=State::Undefined;
     int isMpos;
     size_t nAxis;
     double axis_Position[MAX_N_AXIS];
@@ -56,8 +57,11 @@ class GrblStatus {
     inline void mylock();
     inline void myunlock();
 
+    auto LastStatus = std::chrono::steady_clock::now();
+    auto LastState =  LastStatus;
+
     public:
-         GrblStatus();
+        //  GrblStatus();
          bool GetIsMpos();
          void SetState(State NewState);
          void SetIsMpos (bool myIsMpos);
