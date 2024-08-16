@@ -57,8 +57,8 @@ class GrblStatus {
     inline void mylock();
     inline void myunlock();
 
-    auto LastStatus = std::chrono::steady_clock::now();
-    auto LastState =  LastStatus;
+    timepoint LastStatus;// = std::chrono::steady_clock::now();
+    timepoint LastState;//=  LastStatus;
 
     public:
         //  GrblStatus();
