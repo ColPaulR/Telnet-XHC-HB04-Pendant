@@ -54,6 +54,7 @@ void GrblStatus::SetState(State NewState)
 {
     mylock();
     myState=NewState;
+    LastState = std::chrono::steady_clock::now();
     myunlock();
 }
 
@@ -83,6 +84,7 @@ void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_
         axis_Position[i] = new_axes[i];
         axis_WCO[i] = new_wcos[i];
     } 
+    LastStatus = std::chrono::steady_clock::now();
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
