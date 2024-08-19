@@ -50,14 +50,6 @@ inline void GrblStatus::myunlock()
 //     //   bool ProbeSuccessFlag;
 // }
 
-void GrblStatus::SetState(State NewState)
-{
-    mylock();
-    myState=NewState;
-    LastState = std::chrono::steady_clock::now();
-    myunlock();
-}
-
 bool GrblStatus::GetIsMpos ()
 {
     bool myReturn;
@@ -68,14 +60,28 @@ bool GrblStatus::GetIsMpos ()
     return myReturn;
 }
 
+void GrblStatus::SetState(State NewState)
+{
+    // called from show_state in response to "?" via parse_status_report
+    mylock();
+    myState=NewState;
+    LastStatus = std::chrono::steady_clock::now();
+    myunlock();
+}
+
 void GrblStatus::SetIsMpos (bool myIsMpos)
 {
+        ////// called from show_state in response to "?" via parse_status_report
+
     mylock();
     isMpos = myIsMpos;
     myunlock();
 }
 
-void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis){
+void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis)
+{
+    // called from show_dro in response to "?" via parse_status_report
+
     mylock();
     isMpos = isMpos = new_isMpos;
     nAxis = new_n_axis;
@@ -105,9 +111,12 @@ void GrblStatus::SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_
 
 void GrblStatus::SetSpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed)
 {
+    // called from show_feed_spindle in response to "?" via parse_status_report
+
     mylock();
     feedrate = new_feedrate;
     spindle_speed = new_spindle_speed;
+    LastStatus = std::chrono::steady_clock::now();
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
@@ -117,10 +126,13 @@ void GrblStatus::SetSpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_spe
 
 void GrblStatus::SetSpindleCoolant(int new_spindle, bool new_flood, bool new_mist)
 {
+    // called from show_spindle_coolant in response to "?" via parse_status_report
+
     mylock();
     spindle = new_spindle;
     flood = new_flood;
     mist = new_mist;
+    LastStatus = std::chrono::steady_clock::now();
     myunlock();
 
     #if  (GRBL_STATUS_PARSE_ECHO)
@@ -155,13 +167,17 @@ void GrblStatus::SetProbe(const pos_t *new_axes, const bool probe_success, size_
 
 void GrblStatus::SetGcodeModes(int new_spindle, bool new_mist, bool new_flood, bool new_isG21, bool new_isG91)
 {
+    // called from show_gcode_modes via parse_gcode_report
+
     mylock();
     spindle = new_spindle;
     mist = new_mist;
     flood = new_flood;
     isG21 = new_isG21;
     isG91 = new_isG91;
+    LastStatus = std::chrono::steady_clock::now();
     myunlock();
+    
     #if  (GRBL_STATUS_PARSE_ECHO)
         cout << "SetGcodeModes: S" << new_spindle  << " M" << new_mist  << " Flood" << new_flood << " G21" << new_isG21<< " G91" << new_isG91 << endl;
     #endif
