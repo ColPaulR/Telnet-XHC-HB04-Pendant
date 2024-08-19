@@ -63,6 +63,7 @@ class GrblStatus {
   public:
     //  GrblStatus();
     bool IsStatusTimedOut();
+    bool IsStateTimedOut();
     bool GetIsMpos();
     void SetState(State NewState);
     void SetIsMpos (bool myIsMpos);

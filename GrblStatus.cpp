@@ -55,6 +55,11 @@ bool GrblStatus::IsStatusTimedOut()
     return ((std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-LastStatus).count()) >= STATUSTIMEOUT);
 }
 
+bool GrblStatus::IsStateTimedOut()
+{
+    return ((std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-LastState).count()) >= STATETIMEOUT);
+}
+
 bool GrblStatus::GetIsMpos ()
 {
     bool myReturn;
