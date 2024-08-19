@@ -8,7 +8,7 @@
 #include <chrono>
 
 #include "GrblParser\GrblParserC.h"
-#define STATETIMEOUT  5000
+#define STATETIMEOUT  7000
 #define STATUSTIMEOUT 5000
 
 // From FluidNC/FluidNC/src/Types.h with "enum class" changed to "enum"
