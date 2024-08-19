@@ -8,7 +8,8 @@
 #include <chrono>
 
 #include "GrblParser\GrblParserC.h"
-
+#define STATETIMEOUT  5000
+#define STATUSTIMEOUT 5000
 
 // From FluidNC/FluidNC/src/Types.h with "enum class" changed to "enum"
 // From FluidNC/FluidNC/src/Report.cpp translates enum to string
@@ -56,20 +57,20 @@ class GrblStatus {
 
     inline void mylock();
     inline void myunlock();
-
     std::chrono::time_point<std::chrono::steady_clock> LastStatus = std::chrono::steady_clock::now();
     std::chrono::time_point<std::chrono::steady_clock> LastState =  LastStatus;
 
-    public:
-        //  GrblStatus();
-         bool GetIsMpos();
-         void SetState(State NewState);
-         void SetIsMpos (bool myIsMpos);
-         void SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis);
-         void SetSpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed);
-         void SetSpindleCoolant(int spindle, bool flood, bool mist);
-         void SetProbe(const pos_t *new_axes, const bool new_probe_success, size_t new_n_axis);
-         void SetGcodeModes(int spindle, bool mist, bool flood, bool isG21, bool isG91);
+  public:
+    //  GrblStatus();
+    bool IsStatusTimedOut();
+    bool GetIsMpos();
+    void SetState(State NewState);
+    void SetIsMpos (bool myIsMpos);
+    void SetDro (const pos_t *new_axes, const pos_t *new_wcos, bool new_isMpos, size_t new_n_axis);
+    void SetSpindleFeed (uint32_t new_feedrate, uint32_t new_spindle_speed);
+    void SetSpindleCoolant(int spindle, bool flood, bool mist);
+    void SetProbe(const pos_t *new_axes, const bool new_probe_success, size_t new_n_axis);
+    void SetGcodeModes(int spindle, bool mist, bool flood, bool isG21, bool isG91);
 
 };
 

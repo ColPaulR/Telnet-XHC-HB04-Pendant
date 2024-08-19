@@ -50,6 +50,11 @@ inline void GrblStatus::myunlock()
 //     //   bool ProbeSuccessFlag;
 // }
 
+bool GrblStatus::IsStatusTimedOut()
+{
+    return ((std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-LastStatus).count()) >= STATUSTIMEOUT);
+}
+
 bool GrblStatus::GetIsMpos ()
 {
     bool myReturn;
@@ -177,7 +182,7 @@ void GrblStatus::SetGcodeModes(int new_spindle, bool new_mist, bool new_flood, b
     isG91 = new_isG91;
     LastStatus = std::chrono::steady_clock::now();
     myunlock();
-    
+
     #if  (GRBL_STATUS_PARSE_ECHO)
         cout << "SetGcodeModes: S" << new_spindle  << " M" << new_mist  << " Flood" << new_flood << " G21" << new_isG21<< " G91" << new_isG91 << endl;
     #endif
