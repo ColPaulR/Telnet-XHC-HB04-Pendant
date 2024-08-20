@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
   // Connect to server
   myTelnet.Connect(DEFAULT_SERVER, DEFAULT_PORT);
 
-  iResult = myTelnet.Send("/n"+REPORTINGINTERVALCMD);
+  iResult = myTelnet.Send("/n" REPORTINGINTERVALCMD);
 
   printf("Bytes Sent: %ld\n", iResult);
 
