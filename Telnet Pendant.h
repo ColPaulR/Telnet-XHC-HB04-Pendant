@@ -12,3 +12,6 @@ using namespace std;
 // TODO: Reference additional headers your program requires here.
 // Create static structure to store current state
 extern GrblStatus myGrblStatus;
+extern bool bQuit;
+
+#define LOOPSLEEP 50;

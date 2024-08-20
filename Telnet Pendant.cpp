@@ -21,6 +21,9 @@ void TelnetThread()
   int iResult;
   int recvbuflen = DEFAULT_BUFLEN;
 
+  // Set flag to continue looping
+  bQuite = false;
+
   do {
     iResult = myTelnet.Read(recvbuf,recvbuflen);
 
@@ -39,7 +42,7 @@ void TelnetThread()
       printf("Connection closed\n");
     else
       printf("recv failed with error: %d\n", WSAGetLastError());
-  } while (1);
+  } while (!bQuit);
   return;
 }
 
@@ -67,7 +70,14 @@ int main(int argc, char **argv) {
 
   // Test if taskTelent thread is still running
   // if() taskTelnet.joinable())
+  while (!bQuit)
+  {
+    // Loop
 
+    // Sleep
+    Sleep(LOOPSLEEP);
+  }
+  
   // wait for thread to finish
   taskTelnet.join();
   
