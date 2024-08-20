@@ -68,7 +68,7 @@ int MyTelnet::Read(char *szRead, int BuffLen)
   return recv(MySocket, szRead, BuffLen, 0);
 }
 
-int MyTelnet::Send(char *szSend) {
+int MyTelnet::Send(const char *szSend) {
   int iResult;
   int iResult2;
 

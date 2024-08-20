@@ -26,7 +26,7 @@ class MyTelnet
     public:
         bool Connect(const char *szServer, const char *szPort);
         int Read(char *szRead, int BuffLen);
-        int Send(char *szSend);
+        int Send(const char *szSend);
         // void Task();
         int Initialize();
         ~MyTelnet();
