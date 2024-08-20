@@ -14,4 +14,5 @@ using namespace std;
 extern GrblStatus myGrblStatus;
 extern bool bQuit;
 
-#define LOOPSLEEP 50;
+#define LOOPSLEEP 50
+#define REPORTINGINTERVAL 250
