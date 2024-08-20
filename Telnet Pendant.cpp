@@ -21,9 +21,6 @@ void TelnetThread()
   int iResult;
   int recvbuflen = DEFAULT_BUFLEN;
 
-  // Set flag to continue looping
-  bQuite = false;
-
   do {
     iResult = myTelnet.Read(recvbuf,recvbuflen);
 
@@ -50,6 +47,9 @@ void TelnetThread()
 int main(int argc, char **argv) {
   char sendbuf[] = "/n?/n?/n";
   int iResult;
+
+  // Set flag to continue looping
+  bQuit = false;
 
   // Initialize Winsock
   iResult = myTelnet.Initialize();
