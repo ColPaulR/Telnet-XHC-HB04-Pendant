@@ -45,7 +45,6 @@ void TelnetThread()
 
 
 int main(int argc, char **argv) {
-  // char initbuf[] = "/n" REPORTINGINTERVALCMD;
   int iResult;
 
   // Set flag to continue looping
@@ -73,6 +72,26 @@ int main(int argc, char **argv) {
   while (!bQuit)
   {
     // Loop
+    // Check if position has been reported withing timeout
+    if (myGrblStatus.IsStatusTimedOut)
+    {
+      // Timed out; send position update request
+      myTelnet.Send("?");
+      #if GRLB_TIMEOUT_NOTICE
+        cout << "No position update within last " << STATUSTIMEOUT << " ms/n";
+      #endif
+    }
+
+    // Check if state has been reported withing timeout
+    if (myGrblStatus.IsStateTimedOut)
+    {
+      // Timed out; send state update request
+      myTelnet.Send("$G/n");
+      #if GRLB_TIMEOUT_NOTICE
+        cout << "No state update within last " << STATETIMEOUT << " ms/n";
+      #endif
+    }
+
 
     // Sleep
     Sleep(LOOPSLEEP);
