@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
   {
     // Loop
     // Check if position has been reported withing timeout
-    if (myGrblStatus.IsStatusTimedOut)
+    if (myGrblStatus.IsStatusTimedOut())
     {
       // Timed out; send position update request
       myTelnet.Send("?");
@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
     }
 
     // Check if state has been reported withing timeout
-    if (myGrblStatus.IsStateTimedOut)
+    if (myGrblStatus.IsStateTimedOut())
     {
       // Timed out; send state update request
       myTelnet.Send("$G/n");
