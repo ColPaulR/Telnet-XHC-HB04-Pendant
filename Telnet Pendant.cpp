@@ -45,7 +45,7 @@ void TelnetThread()
 
 
 int main(int argc, char **argv) {
-  char initbuf[] = "/n" REPORTINGINTERVALCMD;
+  // char initbuf[] = "/n" REPORTINGINTERVALCMD;
   int iResult;
 
   // Set flag to continue looping
@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
   // Connect to server
   myTelnet.Connect(DEFAULT_SERVER, DEFAULT_PORT);
 
-  iResult = myTelnet.Send(initbuf);
+  iResult = myTelnet.Send("/n" REPORTINGINTERVALCMD);
 
   printf("Bytes Sent: %ld\n", iResult);
 
