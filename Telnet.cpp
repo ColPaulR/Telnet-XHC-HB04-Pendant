@@ -60,7 +60,7 @@ bool MyTelnet::Connect(const char *szServer, const char *szPort)
     exit(1);
   }
 
-  return MySocket;
+  return true;
 }
 
 int MyTelnet::Read(char *szRead, int BuffLen)

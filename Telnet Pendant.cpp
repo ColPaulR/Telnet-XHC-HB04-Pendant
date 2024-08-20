@@ -35,7 +35,6 @@ void TelnetThread()
         recvbuf[iResult] = 0;
         puts(recvbuf);
       #endif
-      // printf("Bytes received: %d\n\t%s\n", iResult, recvbuf);
     } else if (iResult == 0)
       printf("Connection closed\n");
     else
@@ -46,7 +45,7 @@ void TelnetThread()
 
 
 int main(int argc, char **argv) {
-  char sendbuf[] = "/n?/n?/n";
+  //char initbuf[] = "/n$RI="+"/n";
   int iResult;
 
   // Set flag to continue looping
@@ -62,7 +61,7 @@ int main(int argc, char **argv) {
   // Connect to server
   myTelnet.Connect(DEFAULT_SERVER, DEFAULT_PORT);
 
-  iResult = myTelnet.Send(sendbuf);
+  iResult = myTelnet.Send("/n"+REPORTINGINTERVALCMD);
 
   printf("Bytes Sent: %ld\n", iResult);
 

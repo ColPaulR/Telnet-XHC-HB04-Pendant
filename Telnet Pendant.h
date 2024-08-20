@@ -16,3 +16,4 @@ extern bool bQuit;
 
 #define LOOPSLEEP 50
 #define REPORTINGINTERVAL 250
+#define REPORTINGINTERVALCMD "$RI=250/n"
