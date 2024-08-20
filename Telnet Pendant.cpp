@@ -11,6 +11,7 @@ using namespace std;
 
 // Create class to store and provide current state
 GrblStatus myGrblStatus;
+bool bQuit;
 
 // Class for communicating with FluidNC
 MyTelnet myTelnet;
